@@ -1,0 +1,161 @@
+/*-------------------------禁止选择-------------------------*/
+body
+{
+	background: #3f3f3f;
+	margin: 0;
+	-moz-user-select: none; 
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+/*-------------------------网格视图-------------------------*/
+.wrapper
+{ 
+	grid-column: 1 / 4; 
+	grid-row: 1; 
+}
+/*-------------------------按钮样式-------------------------*/
+span
+{
+	display: inline-block;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	vertical-align: middle;
+	color: rgb(255, 255, 255);
+	background-color: rgb(233, 104, 107);
+	text-align: center;
+	cursor: pointer;
+	white-space: nowrap;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+	font-family: Consolas;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	outline: 0;
+	padding: 8px 32px;
+	overflow: hidden;
+	text-decoration: none;
+	transition: all 0.2s ease-out 0s;
+	border-radius: 2px;
+}
+/*-------------------------过渡动画-------------------------*/
+span.butt
+{
+	background-color: rgb(233, 104, 107);
+	color: #1a1a1a;
+}
+span.butt:hover
+{
+	background-color: #b35052;
+	color: #efefef;
+}
+span.butt:active
+{
+	background-color: #662e2f;
+	color: #ffffff;
+}
+span.buttb
+{
+	color: #3f3f3f;
+	background-color: #68c0e8;
+	padding: 8px 108px;
+}
+
+span.buttb:hover
+{
+	background-color: #5093b3;
+	color: #ffffff;
+}
+span.buttb:active
+{
+	background-color: #345f73;
+	color: #ffffff;
+}
+
+span.butty
+{
+	color: #000000;
+	background-color: #e8d868;
+}
+span.butty:hover
+{
+	background-color: #b3a550;
+	color: #ffffff;
+}
+span.butty:active
+{
+	background-color: #807320;
+	color: #ffffff;
+}
+
+span.buttg
+{
+
+	color: #2b2b2b;
+	background-color: #68e974;
+}
+span.buttg:hover
+{
+	background-color: #50b35a;
+	color: #efefef;
+}
+span.buttg:active
+{
+	background-color: #34733a;
+	color: #efefef;
+}
+
+/*-------------------------文字样式-------------------------*/
+h1.cal
+{
+	text-align: center;
+	color: #00e676;
+	font-size: 50px;
+	font-family: 微软雅黑;
+}
+p
+{
+	text-align: center;
+}
+p.scr
+{
+	color: #ffc400;
+	font-size: 30px;
+	font-family: consolas;
+}
+p.sho
+{
+	color: #29b6f6;
+	font-size: 15px;
+	font-family: consolas;
+}
+p.version
+{
+	margin: 0px;
+	color: #ea80fc;
+	font-size: 10px;
+	font-family: 微软雅黑;
+}
+a
+{
+	text-align: center;
+	font-size: 20px;
+	font-family: 微软雅黑;
+}
+a:link 
+{
+	color: #1de9b6; 
+	text-decoration: none;
+}
+a:hover
+{
+	color: #ffc400;
+	text-decoration: underline;
+}
+div
+{
+	text-align: center;
+}
