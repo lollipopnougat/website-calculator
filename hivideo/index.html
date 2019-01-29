@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>hivideo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/hivideo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lollipopnougat/website-calculator/html/style.css" />
+    <script type="text/javascript" src="hivideo.js"></script>
+    <style type="text/css">
+        .main-wrap {
+            margin: 0 auto;
+            min-width: 640px;
+            max-width: 720px;
+        }
+        body {
+            background: url("https://cdn.jsdelivr.net/gh/lollipopnougat/website-calculator/img/bg1.jpg");
+            background-size: cover;
+        }
+        .main-wrap video {
+            width: 100%;
+        }
+    </style>
+    <script>
+        function fun() {
+            var vid = document.getElementById("hivideo-player");
+            vid.src = prompt("请输入MP4视频链接");
+            if (vid.src == null || vid.src == "") {
+                alert("播放源不能为空！将自动选择默认源.");
+                vid.src = "https://cdn.jsdelivr.net/gh/lollipopnougat/website-calculator/files/TH125-1.mp4";
+            }
+            console.log("加载" + vid.src);
+            vid.load();
+        }
+
+        
+
+    </script>
+</head>
+
+<body>
+    <!--
+    <div class="main-wrap">
+        <video ishivideo="true" autoplay="false" isrotate="false" autoHide="true">
+            <source src="http://www.html5videoplayer.net/videos/madagascar3.mp4" type="video/mp4">
+        </video>
+    </div>
+-->
+    <h1 style="color: #00ccff;text-align: center;text-shadow: 0 2px rgb(105, 105, 105);">video播放器测试</h1>
+    <div class="main-wrap">
+        <video ishivideo="true" autoplay="false" isrotate="false" autoHide="true" id="hivideo-player">
+            <source src="https://cdn.jsdelivr.net/gh/lollipopnougat/website-calculator/files/TH125-1.mp4" type="video/mp4">
+        </video>
+    </div>
+    <!--
+    <div class="support">
+        <button class="sup-btn" onclick="fun()">手动设置播放源</button>
+    </div>
+-->
+
+</body>
+
+</html>
