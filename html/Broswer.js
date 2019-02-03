@@ -15,7 +15,7 @@ function getexp() {
     var EdgeVersion = new RegExp("Edge/\\d*.\\d*");
     var includeSafari = /Safari/;
     var isWin = /Windows NT \d+.\d*/i;
-    var isAndroid = /Android/i;
+    var isAndroid = /Android \d.\d.?\d?/i;
     var isApple = new RegExp("iP\\w+");
     var isMac = /Macintosh/i;
     if (isWin.test(ua)) {
@@ -45,7 +45,11 @@ function getexp() {
         if (isiOS.test(ua)) iOSV = isiOS.exec(ua);
         else iOSV = "无法识别";
         str = "您的设备看上去是 " + sstt + " ,<br/>iOS版本: " + iOSV[0].replace(/_/g, ".") + " ,<br/>";
-    } else if (isAndroid.test(ua)) str = "您的系统看上去是 Android ,<br/>";
+    } else if (isAndroid.test(ua)) {
+        let st = isAndroid.exec(ua)[0];
+        str = "您的系统看上去是 " + st + ",<br/>";
+    }
+    
     else str = "您的系统大概是 Linux 吧 ,<br/>";
     if (isEdge.test(ua)) {
         str += "浏览器是 Microsoft Edge ,<br/>Edge版本: ";
