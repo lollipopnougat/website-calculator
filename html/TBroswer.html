@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+            function getexp() {
+                var str;
+                var ua = navigator.userAgent;
+                var isEdge = new RegExp("Edge");
+                var isQQ = new RegExp("QQBrowser");
+                var isUC = new RegExp("UBrowser");
+                var isFireFox = new RegExp("Firefox");
+                var isIE = new RegExp("Trident");
+                var includeChrome = /Chrome/;
+                var includeSafari = /Safari/;
+                if (isEdge.test(ua)) str = "浏览器是 Microsoft Edge";
+                else if (isQQ.test(ua)) str = "浏览器是 QQ 浏览器";
+                else if (isUC.test(ua)) str = "浏览器是 UC 浏览器";
+                else if (isFireFox.test(ua)) str ="浏览器是 Mozilla FireFox";
+                else if (isIE.test(ua)) str ="浏览器是 Microsoft IE 或 IE 内核浏览器";
+                else if (includeSafari.test(ua) && !includeChrome.test(ua)) str = "浏览器是 Apple Safari";
+                else if (includeSafari.test(ua) && includeChrome.test(ua)) str = "浏览器可能是 Google Chrome/Chromium及衍生浏览器";
+                document.getElementById("show").innerHTML = str;
+            }
+        </script>
+</head>
+<body>
+    <button id="btn1" onclick="getexp()">测试一下</button>
+    <p id="show">123</p>
+    
+</body>
+</html>
