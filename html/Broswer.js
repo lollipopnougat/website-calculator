@@ -59,7 +59,7 @@ function getexp() {
     } else if (isCriOS.test(ua)) {
         str += "浏览器是 Chrome 移动版（仅Apple）<br/>Chrome版本: ";
         let arr = CriVersion.exec(ua);
-        str += arr[0].substr(7);
+        str += arr[0].substr(6);
     } else if (isMQQ.test(ua)) str += "浏览器是 QQ 浏览器移动版";
     else if (isQQ.test(ua)) str += "浏览器是 QQ 浏览器";
     else if (isUC.test(ua)) str += "浏览器是 UC 浏览器";
