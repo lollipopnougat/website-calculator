@@ -1,56 +1,62 @@
 div.support {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			text-align: center;
-		}
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+}
 
-		div.support>textarea {
-			width: 30em;
-			height: 12em;
-			margin: 1em;
-		}
+div.support>textarea {
+	width: 30em;
+	height: 12em;
+	margin: 1em;
+}
 
-		div.support>.buttons {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-around;
-		}
+div.support>.buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
 
-		button.sup-btn {
-			display: inline-block;
-			margin-top: 15px;
-			margin-bottom: 10px;
-			vertical-align: middle;
-			color: rgb(255, 255, 255);
-			background-color: #ff8a80;
-			text-align: center;
-			cursor: pointer;
-			white-space: nowrap;
-			box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-			font-family: Consolas;
-			border-width: initial;
-			border-style: none;
-			border-color: initial;
-			border-image: initial;
-			outline: 0;
-			padding: 8px 16px;
-			overflow: hidden;
-			text-decoration: none;
-			transition: all 0.5s ease-out 0s;
-			border-radius: 2px;
-		}
+button.sup-btn {
+	display: inline-block;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	vertical-align: middle;
+	color: rgb(255, 255, 255);
+	background-color: #ff8a80;
+	text-align: center;
+	cursor: pointer;
+	white-space: nowrap;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+	font-family: Consolas;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	outline: 0;
+	padding: 8px 16px;
+	overflow: hidden;
+	text-decoration: none;
+	transition: all 0.5s ease-out 0s;
+	border-radius: 2px;
+}
 
-		button.sup-btn:hover {
-			background-color: #b35052;
-			color: #a4ffe1;
-			padding: 8px 160px;
-			border-radius: 10px;
-		}
+button.sup-btn:hover {
+	background-color: #b35052;
+	color: #a4ffe1;
+	padding: 8px 160px;
+	border-radius: 10px;
+}
 
-		button.sup-btn:active {
-			color: #ffffff;
-			background-color: #ff7c31;
-			border-radius: 10px;
-			box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
-		}
+button.sup-btn:active {
+	color: #ffffff;
+	background-color: #ff7c31;
+	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+}
+
+p.showd {
+	text-align: center;
+	color: #009e4f;
+	font-size: 18px;
+}
