@@ -3,7 +3,10 @@ hivideo是一款自定义的html5 video播放器，重写了播放控制条样�
 
 如果在手机端使用，在全屏时支持横屏播放。
 
+本项目已经将hivideo的播放控件样式更换为material design的风格
+
 在线演示地址：https://heavis.github.io/hivideo/index.html
+[本项目的演示地址](https://lollipopnougat.github.io/website-calculator/hivideo/index.html)
 
 hivideo支持CommonJs、CMD、AMD规范。
 
