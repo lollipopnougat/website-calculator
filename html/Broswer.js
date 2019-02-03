@@ -11,6 +11,7 @@ function getexp() {
     var isOpera = /OPR/;
     var includeChrome = /Chrome/;
     var ChromeVersion = new RegExp("Chrome/[\\d*.]* ");
+    var CriVersion = new RegExp("CriOS/[\\d*.]* ");
     var SafariVersion = new RegExp("Safari/\\d*.\\d*");
     var EdgeVersion = new RegExp("Edge/\\d*.\\d*");
     var includeSafari = /Safari/;
@@ -57,7 +58,7 @@ function getexp() {
         str += arr[0].substr(4);
     } else if (isCriOS.test(ua)) {
         str += "浏览器是 Chrome 移动版（仅Apple）<br/>Chrome版本: ";
-        let arr = ChromeVersion.exec(ua);
+        let arr = CriVersion.exec(ua);
         str += arr[0].substr(7);
     } else if (isMQQ.test(ua)) str += "浏览器是 QQ 浏览器移动版";
     else if (isQQ.test(ua)) str += "浏览器是 QQ 浏览器";
