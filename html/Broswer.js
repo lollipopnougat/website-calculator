@@ -20,7 +20,7 @@ function getexp() {
     var isQQ = new RegExp("QQBrowser");
     var isMQQ = new RegExp("MQQBrowser/\\d*.\\d*");
     var isUC = new RegExp("UBrowser");
-    var isFireFox = new RegExp("Firefox");
+    var isFireFox = new RegExp("Firefox/\\d*.\\d*");
     var isIE = new RegExp("Trident/\\d*.\\d*");
     var isCriOS = /CriOS/;
     var isOpera = /OPR/;
@@ -97,7 +97,12 @@ function getexp() {
         str += arr[0].substr(6);
     } else if (isQQ.test(ua)) str += "浏览器是 QQ 浏览器";
     else if (isUC.test(ua)) str += "浏览器是 UC 浏览器";
-    else if (isFireFox.test(ua)) str += "浏览器是 Mozilla FireFox";
+    else if (isFireFox.test(ua)) {
+        str += "浏览器是 Mozilla FireFox ,<br/>版本是: ";
+        let arr = isFireFox.exec(ua);
+        str += arr[0].substr(8);
+    }
+    
     else if (isOpera.test(ua)) str += "浏览器是 Opera";
     else if (isIE.test(ua)) {
         str += "浏览器是 Microsoft IE 或使用了 IE 内核的浏览器 ,<br/>IE内核版本: ";
