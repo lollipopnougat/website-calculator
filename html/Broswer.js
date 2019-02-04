@@ -3,10 +3,10 @@ function getexp() {
     var ua = navigator.userAgent;
     var isEdge = new RegExp("Edge");
     var isQQ = new RegExp("QQBrowser");
-    var isMQQ = new RegExp("MQQBrowser");
+    var isMQQ = new RegExp("MQQBrowser/\\d*.\\d*");
     var isUC = new RegExp("UBrowser");
     var isFireFox = new RegExp("Firefox");
-    var isIE = new RegExp("Trident");
+    var isIE = new RegExp("Trident/\\d*.\\d*");
     var isCriOS = /CriOS/;
     var isOpera = /OPR/;
     var includeChrome = /Chrome/;
@@ -16,30 +16,43 @@ function getexp() {
     var EdgeVersion = new RegExp("Edge/\\d*.\\d*");
     var includeSafari = /Safari/;
     var isWin = /Windows NT \d+.\d*/i;
-    var isAndroid = /Android \d.\d.?\d?/i;
+    var isAndroid = /Android \d.\d[^;]?\d?/i;
     var isApple = new RegExp("iP\\w+");
     var isMac = /Macintosh/i;
+    var isQuark = new RegExp("Quark/\\d*.\\d*.\\d*.\\d*");
     if (isWin.test(ua)) {
         let st = isWin.exec(ua)[0];
         switch (st) {
-            case "Windows NT 10.0": st = "Windows 10"; break;
-            case "Windows NT 6.1": st = "Windows 7"; break;
-            case "Windows NT 6.2": st = "Windows 8"; break;
-            case "Windows NT 6.3": st = "Windows 8.1"; break;
-            case "Windows NT 6.0": st = "Windows Vista"; break;
-            case "Windows NT 5.1": st = "Windows XP"; break;
-            case "Windows NT 5.2": st = "Windows Server 2003"; break;
-            default: st = "早期版本的 Windows ";
+            case "Windows NT 10.0":
+                st = "Windows 10";
+                break;
+            case "Windows NT 6.1":
+                st = "Windows 7";
+                break;
+            case "Windows NT 6.2":
+                st = "Windows 8";
+                break;
+            case "Windows NT 6.3":
+                st = "Windows 8.1";
+                break;
+            case "Windows NT 6.0":
+                st = "Windows Vista";
+                break;
+            case "Windows NT 5.1":
+                st = "Windows XP";
+                break;
+            case "Windows NT 5.2":
+                st = "Windows Server 2003";
+                break;
+            default:
+                st = "早期版本的 Windows ";
         }
-        str = "您的系统看上去是 "+ st +" ,<br/>";
-    }
-    else if (isMac.test(ua)) {
+        str = "您的系统看上去是 " + st + " ,<br/>";
+    } else if (isMac.test(ua)) {
         let isMacOS = new RegExp("\\d*.\\d*.?\\d*");
         let iOSV = isiOS.exec(ua);
         str = "您的系统看上去是 macOS ,<br/>"
-    }
-    
-    else if (isApple.test(ua)) {
+    } else if (isApple.test(ua)) {
         let sstt = isApple.exec(ua)[0];
         let isiOS = new RegExp("\\d*_\\d*_?\\d*");
         let iOSV;
@@ -49,9 +62,7 @@ function getexp() {
     } else if (isAndroid.test(ua)) {
         let st = isAndroid.exec(ua)[0];
         str = "您的系统看上去是 " + st + ",<br/>";
-    }
-    
-    else str = "您的系统大概是 Linux 吧 ,<br/>";
+    } else str = "您的系统大概是 Linux 吧 ,<br/>";
     if (isEdge.test(ua)) {
         str += "浏览器是 Microsoft Edge ,<br/>Edge版本: ";
         let arr = EdgeVersion.exec(ua);
@@ -60,13 +71,25 @@ function getexp() {
         str += "浏览器是 Chrome 移动版（仅Apple）<br/>Chrome版本: ";
         let arr = CriVersion.exec(ua);
         str += arr[0].substr(6);
-    } else if (isMQQ.test(ua)) str += "浏览器是 QQ 浏览器移动版";
-    else if (isQQ.test(ua)) str += "浏览器是 QQ 浏览器";
+    } else if (isMQQ.test(ua)) {
+
+        str += "浏览器是 QQ 浏览器移动版 ,<br/>版本为: ";
+        let arr = isMQQ.exec(ua);
+        str += arr[0].substr(11);
+    } else if (isQuark.test(ua)) {
+        str += "浏览器是 夸克 ,<br/>版本: ";
+        let arr = isQuark.exec(ua);
+        str += arr[0].substr(6);
+    } else if (isQQ.test(ua)) str += "浏览器是 QQ 浏览器";
     else if (isUC.test(ua)) str += "浏览器是 UC 浏览器";
     else if (isFireFox.test(ua)) str += "浏览器是 Mozilla FireFox";
     else if (isOpera.test(ua)) str += "浏览器是 Opera";
-    else if (isIE.test(ua)) str += "浏览器是 Microsoft IE 或 IE 内核浏览器";
-    else if (includeSafari.test(ua) && !includeChrome.test(ua)) {
+    else if (isIE.test(ua)) {
+        str += "浏览器是 Microsoft IE 或使用了 IE 内核的浏览器 ,<br/>IE内核版本: ";
+        let arr = isIE.exec(ua);
+        str += arr[0].substr(8);
+
+    } else if (includeSafari.test(ua) && !includeChrome.test(ua)) {
         str += "浏览器是 Apple Safari ,<br/>Safari版本: ";
         let arr = SafariVersion.exec(ua);
         str += arr[0].substr(7);
