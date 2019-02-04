@@ -43,7 +43,7 @@ button.sup-btn {
 
 button.sup-btn:hover {
 	background-color: #b35052;
-	color: #a4ffe1;
+	color: #dddddd;
 	padding: 8px 128px;
 	border-radius: 10px;
 }
@@ -57,6 +57,11 @@ button.sup-btn:active {
 
 p.showd {
 	text-align: center;
-	color: #009e4f;
+	color: #FFB800;
 	font-size: 18px;
+}
+p.showd2 {
+	text-align: center;
+	color: #5FB878;
+	font-size: 20px;
 }

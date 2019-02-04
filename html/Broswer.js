@@ -149,7 +149,7 @@ function getexp() {
         window.open("mailto:ab2defg145@126.com?subject=反馈&amp&body=我在使用该浏览器UA时网站不能识别： " + ua);
     }
     document.getElementById("show").innerHTML = str;
+    if (num == 1) document.getElementById("show2").innerHTML = "春节快乐！"
     if (num == 5) copy(ua);
-    if (num == 4) alert("网络类型: " + getNetworkType());
-    if (num == 6) alert(navigator.platform);
+    if (num == 6) document.getElementById("show2").innerHTML = "平台类型(EX): " + navigator.platform;
 }
