@@ -1,4 +1,19 @@
+var num = 0;
+function copy(i) {
+    let oInput = document.createElement("input");
+    if (i == "") alert("参数不能为空!");
+    else {
+        oInput.value = i;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = "oInput";
+        oInput.style.display="none";
+        console.log("复制成功");
+    } 
+}
 function getexp() {
+    num++;
     var str;
     var ua = navigator.userAgent;
     var isEdge = new RegExp("Edge");
@@ -102,4 +117,5 @@ function getexp() {
         window.open("mailto:ab2defg145@126.com?subject=反馈&amp&body=我在使用该浏览器UA时网站不能识别： " + ua);
     }
     document.getElementById("show").innerHTML = str;
+    if (num == 5) copy(ua);
 }
