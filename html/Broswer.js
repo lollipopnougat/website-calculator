@@ -1,4 +1,5 @@
 var num = 0;
+
 function copy(i) {
     let oInput = document.createElement("input");
     if (i == "") alert("参数不能为空!");
@@ -8,10 +9,38 @@ function copy(i) {
         oInput.select(); // 选择对象
         document.execCommand("Copy"); // 执行浏览器复制命令
         oInput.className = "oInput";
-        oInput.style.display="none";
+        oInput.style.display = "none";
         console.log("复制成功");
-    } 
+    }
 }
+
+function getNetworkType() {
+    var ua = navigator.userAgent;
+    var networkStr = ua.match(/NetType\/\w+/) ? ua.match(/NetType\/\w+/)[0] : 'NetType/other';
+    networkStr = networkStr.toLowerCase().replace('nettype/', '');
+    var networkType;
+    switch (networkStr) {
+        case 'wifi':
+            networkType = 'wifi';
+            break;
+        case '4g':
+            networkType = '4g';
+            break;
+        case '3g':
+            networkType = '3g';
+            break;
+        case '3gnet':
+            networkType = '3g';
+            break;
+        case '2g':
+            networkType = '2g';
+            break;
+        default:
+            networkType = 'other';
+    }
+    return networkType;
+}
+
 function getexp() {
     num++;
     var str;
@@ -101,9 +130,7 @@ function getexp() {
         str += "浏览器是 Mozilla FireFox ,<br/>版本是: ";
         let arr = isFireFox.exec(ua);
         str += arr[0].substr(8);
-    }
-    
-    else if (isOpera.test(ua)) str += "浏览器是 Opera";
+    } else if (isOpera.test(ua)) str += "浏览器是 Opera";
     else if (isIE.test(ua)) {
         str += "浏览器是 Microsoft IE 或使用了 IE 内核的浏览器 ,<br/>IE内核版本: ";
         let arr = isIE.exec(ua);
@@ -123,4 +150,6 @@ function getexp() {
     }
     document.getElementById("show").innerHTML = str;
     if (num == 5) copy(ua);
+    if (num == 4) alert("网络类型: " + getNetworkType());
+    if (num == 6) alert(navigator.platform);
 }
