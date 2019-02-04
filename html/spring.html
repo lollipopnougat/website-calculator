@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>春节快乐</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="spring.css" />
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <script src="../layui/layui.js"></script>
+
+
+    <script>
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            document.getElementById("btn1").onclick = layer.msg('春节快乐啊');
+        });
+    </script>
+</head>
+
+<body>
+    <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item"><a href="">贺卡</a></li>
+    </ul>
+    <button class="layui-btn layui-btn-normal" id="btn1">一个标准的按钮</button>
+</body>
+
+</html>
