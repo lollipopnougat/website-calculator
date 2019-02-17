@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>俄罗斯方块演示版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        h3 {
+            display: inline;
+            font-size: 16px;
+            text-align: center;
+            color: #0066ff;
+            
+        }
+        .wrapper {
+            display: grid;
+            grid-template-columns: 50px 50px 50px;
+            grid-template-rows: 30px 30px 30px;
+        }
+
+        div.support {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            text-align: center;
+        }
+
+        div.buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        button {
+            display: inline-block;
+            margin: 2px;
+            vertical-align: middle;
+            color: rgb(0, 0, 0);
+            background-color: #3eb2ff;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            font-family: Consolas;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            outline: 0;
+            /*padding: 48px 16px;*/
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.2s ease-out 0s;
+            border-radius: 5px;
+        }
+
+
+
+        button:active {
+            color: #ffffff;
+            background-color: #125dbe;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>俄罗斯方块演示版</h3>
+    <div id="box" style="display:inline-block;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
+    <div style="display:inline-block;margin: 0px 0 0 0;" class="support">
+        <div class="wrapper">
+            <span></span>
+            <button id="up">↑</button>
+            <span></span>
+            <button id="left">←</button>
+            <button id="start">开始</button>
+            <button id="right">→</button>
+            <span></span>
+            <button id="down">↓</button>
+            <span></span>
+        </div>
+    </div>
+    <p style="color:limegreen;text-align: center">毫无设计排版可言<br/><a href="https://crepe.coding.me/Crepeblog" style="color:limegreen;">2019·FC</a></p>
+    <script>
+        var domain = "crepe.coding.me/Crepeblog/";
+        var author = "Fc";
+        var map = eval("[" + Array(23).join("0x801,") + "0xfff]");
+        var tatris = [
+            [0x6600],
+            [0x2222, 0xf00],
+            [0xc600, 0x2640],
+            [0x6c00, 0x4620],
+            [0x4460, 0x2e0, 0x6220, 0x740],
+            [0x2260, 0xe20, 0x6440, 0x4700],
+            [0x2620, 0x720, 0x2320, 0x2700]
+        ];
+        var keycom = {
+            "38": "rotate(1)",
+            "40": "down()",
+            "37": "move(2,1)",
+            "39": "move(0.5,-1)"
+        };
+        var dia, pos, bak, run;
+
+        function start() {
+            dia = tatris[~~(Math.random() * 7)];
+            bak = pos = {
+                fk: [],
+                y: 0,
+                x: 4,
+                s: ~~(Math.random() * 4)
+            };
+            rotate(0);
+        }
+
+        function over() {
+            document.onkeydown = null;
+            clearInterval(run);
+            alert("GAME OVER");
+        }
+
+        function update(t) {
+            bak = {
+                fk: pos.fk.slice(0),
+                y: pos.y,
+                x: pos.x,
+                s: pos.s
+            };
+            if (t) return;
+            for (var i = 0, a2 = ""; i < 22; i++)
+                a2 += map[i].toString(2).slice(1, -1) + "<br/>";
+            for (var i = 0, n; i < 4; i++)
+                if (/([^0]+)/.test(bak.fk[i].toString(2).replace(/1/g, "\u25a1")))
+                    a2 = a2.substr(0, n = (bak.y + i + 1) * 15 - RegExp.$_.length - 4) + RegExp.$1 + a2.slice(n +
+                        RegExp.$1.length);
+            document.getElementById("box").innerHTML = a2.replace(/1/g, "\u25a0").replace(/0/g, "\u3000");
+        }
+
+        function is() {
+            for (var i = 0; i < 4; i++)
+                if ((pos.fk[i] & map[pos.y + i]) != 0) return pos = bak;
+        }
+
+        function rotate(r) {
+            var f = dia[pos.s = (pos.s + r) % dia.length];
+            for (var i = 0; i < 4; i++)
+                pos.fk[i] = (f >> (12 - i * 4) & 15) << pos.x;
+            update(is());
+        }
+
+        function down() {
+            ++pos.y;
+            if (is()) {
+                for (var i = 0; i < 4 && pos.y + i < 22; i++)
+                    if ((map[pos.y + i] |= pos.fk[i]) == 0xfff)
+                        map.splice(pos.y + i, 1), map.unshift(0x801);
+                if (map[1] != 0x801) return over();
+                start();
+            }
+            update();
+        }
+
+        function move(t, k) {
+            pos.x += k;
+            for (var i = 0; i < 4; i++)
+                pos.fk[i] *= t;
+            update(is());
+        }
+
+        function sstart() {
+            start();
+            run = setInterval("down()", 400);
+            document.getElementById("start").style.visibility = "hidden";
+        }
+
+        function uup() {
+            rotate(1);
+        }
+
+        function lleft() {
+            move(2, 1);
+        }
+
+        function rright() {
+            move(0.5, -1);
+        }
+
+        document.onkeydown = function (e) {
+            eval(keycom[(e ? e : event).keyCode]);
+        };
+        document.getElementById("start").addEventListener("click", sstart);
+        document.getElementById("up").addEventListener("click", uup);
+        document.getElementById("left").addEventListener("click", lleft);
+        document.getElementById("right").addEventListener("click", rright);
+        document.getElementById("down").addEventListener("click", down);
+        //start();
+        //run = setInterval("down()", 400);
+    </script>
+</body>
+
+</html>
