@@ -44,8 +44,8 @@
         }
 
         #game-window .game-panel {
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            height: 400px;
             background-color: #bbada0;
             border-radius: 6px;
             margin-top: 6px;
@@ -55,8 +55,8 @@
         #game-window .game-panel .bg-cell,
         #game-window .game-panel .cell {
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background-color: #ccc0b3;
             border-radius: 6px;
             transition: 200ms;
@@ -68,41 +68,41 @@
             opacity: .8;
             font-size: 60px;
             font-weight: bold;
-            line-height: 100px;
+            line-height: 80px;
             text-align: center;
             color: #776e65;
         }
 
         .row0 {
-            top: 20px;
+            top: 16px;
         }
 
         .row1 {
-            top: 140px;
+            top: 112px;
         }
 
         .row2 {
-            top: 260px;
+            top: 208px;
         }
 
         .row3 {
-            top: 380px;
+            top: 304px;
         }
 
         .col0 {
-            left: 20px;
+            left: 16px;
         }
 
         .col1 {
-            left: 140px;
+            left: 112px;
         }
 
         .col2 {
-            left: 260px;
+            left: 208px;
         }
 
         .col3 {
-            left: 380px;
+            left: 304px;
         }
     </style>
 
@@ -467,6 +467,10 @@
             //new game按钮效果实现
             $("#game-window .option .button").click(function () {
                 init();
+            })
+            //阻止页面滑动
+            $(document).on('touchmove', function (e) {
+                e.preventDefault();
             })
 
             var startx, starty;
