@@ -8,17 +8,18 @@
     <title>俄罗斯方块演示版</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            text-align: center;
+        }
         h3 {
-            display: inline;
             font-size: 16px;
             text-align: center;
             color: #0066ff;
-            
         }
         .wrapper {
             display: grid;
-            grid-template-columns: 50px 50px 50px;
-            grid-template-rows: 30px 30px 30px;
+            grid-template-columns: 75px 75px 75px;
+            grid-template-rows: 35px 35px 35px;
         }
 
         div.support {
@@ -69,9 +70,8 @@
 </head>
 
 <body>
-    <h3>俄罗斯方块演示版</h3>
-    <div id="box" style="display:inline-block;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
-    <div style="display:inline-block;margin: 0px 0 0 0;" class="support">
+    <div id="box" style="float: left;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 10px ridge;text-shadow:2px 3px 1px #0f0;"></div>
+    <div style="float: left;margin: 0px 0 0 0;" class="support">
         <div class="wrapper">
             <span></span>
             <button id="up">↑</button>
@@ -84,7 +84,11 @@
             <span></span>
         </div>
     </div>
-    <p style="color:limegreen;text-align: center">毫无设计排版可言<br/><a href="https://crepe.coding.me/Crepeblog" style="color:limegreen;">2019·FC</a></p>
+    <h3>俄罗斯方块<br/>演示版</h3>
+    <p style="color:limegreen;text-align: center">毫无设计<br/>排版可言</p>
+    <p  style="text-align: left;color: #125dbe;">分数: </p>
+    <p id="scores" style="text-align: left;">0</p>
+    <a href="https://crepe.coding.me/Crepeblog" style="color:limegreen;">2019·FC</a>
     <script>
         var domain = "crepe.coding.me/Crepeblog/";
         var author = "Fc";
@@ -105,7 +109,7 @@
             "39": "move(0.5,-1)"
         };
         var dia, pos, bak, run;
-
+        var scores = 0;
         function start() {
             dia = tatris[~~(Math.random() * 7)];
             bak = pos = {
@@ -120,7 +124,7 @@
         function over() {
             document.onkeydown = null;
             clearInterval(run);
-            alert("GAME OVER");
+            alert("游戏结束!\n" + "你的分数: " + scores);
         }
 
         function update(t) {
@@ -134,9 +138,8 @@
             for (var i = 0, a2 = ""; i < 22; i++)
                 a2 += map[i].toString(2).slice(1, -1) + "<br/>";
             for (var i = 0, n; i < 4; i++)
-                if (/([^0]+)/.test(bak.fk[i].toString(2).replace(/1/g, "\u25a1")))
-                    a2 = a2.substr(0, n = (bak.y + i + 1) * 15 - RegExp.$_.length - 4) + RegExp.$1 + a2.slice(n +
-                        RegExp.$1.length);
+                if (/([^0]+)/.test(bak.fk[i].toString(2).replace(/1/g, "\u25a1"))) 
+                    a2 = a2.substr(0, n = (bak.y + i + 1) * 15 - RegExp.$_.length - 4) + RegExp.$1 + a2.slice(n + RegExp.$1.length); 
             document.getElementById("box").innerHTML = a2.replace(/1/g, "\u25a0").replace(/0/g, "\u3000");
         }
 
@@ -156,8 +159,11 @@
             ++pos.y;
             if (is()) {
                 for (var i = 0; i < 4 && pos.y + i < 22; i++)
-                    if ((map[pos.y + i] |= pos.fk[i]) == 0xfff)
+                    if ((map[pos.y + i] |= pos.fk[i]) == 0xfff) {
                         map.splice(pos.y + i, 1), map.unshift(0x801);
+                        scores++;
+                        document.getElementById("scores").innerHTML = scores;
+                    }
                 if (map[1] != 0x801) return over();
                 start();
             }
