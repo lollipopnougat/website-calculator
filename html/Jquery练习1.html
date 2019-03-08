@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css">-->
+    <script src="jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#button1").click(function () {
+                $("p").fadeToggle();
+            });
+            $("#button2").click(function (){$("p").show(500);});
+            $("#button3").click(function (){$("#button1").slideToggle();});
+            $("#button4").click(function (){$("#23232").animate({left: '300px',fontSize:'+=5px'});});
+            $("#23232").dblclick(function (){$("#23232").toggle("slow");});
+            $("#shower").load("123.txt");
+        });
+    </script>
+</head>
+
+<body>
+    <p>emmmmmm</p>
+    <button id="button1">点一下试试</button>
+    <button id="button2">恢复</button>
+    <button id="button3">滑动</button>
+    <button id="button4">动画</button>
+    <p id="23232" style="position: fixed;">232323</p>
+    <div id="shower" style="text-align: center;position: relative;">测试</div>
+</body>
+
+</html>

@@ -7,8 +7,9 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "file:///D:/front%20end/website-calculator/html/Rublock.html",
+            "name": "启动Chrome调试",
+            //"preLaunchTask": "http-server",
+            "url": "http://localhost:8080/${fileBasename}",
             "webRoot": "${workspaceFolder}"
         }
     ]
