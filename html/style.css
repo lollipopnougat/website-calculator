@@ -60,8 +60,28 @@ p.showd {
 	color: #FFB800;
 	font-size: 18px;
 }
+
 p.showd2 {
 	text-align: center;
 	color: #5FB878;
 	font-size: 20px;
 }
+
+span.sh1 {
+	text-align: center;
+	color: #FFB800;
+	font-size: 20px;
+}
+
+span.sh2 {
+	text-align: center;
+	color: #009688;
+	font-size: 20px;
+}
+
+span.sh3 {
+	text-align: center;
+	color: #1E9FFF;
+	font-size: 20px;
+}
+

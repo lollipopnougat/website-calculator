@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>进制转换</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="spring.css">
+    <script src="jquery-1.9.0.min.js"></script>
+    <script src="convert.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn").click(main);
+        });
+    </script>
+</head>
+
+<body>
+    <h1 style="color:#FF5722;font-size: 50px;">进制转换</h1>
+    <input type="text" id="kw" /><br>
+    <div class="support">
+        <button class="sup-btn" id="btn">转换</button><br>
+    </div>
+    <div>
+        <span id="show1" class="sh1">原码</span><br>
+        <span id="show2" class="sh2">反码</span><br>
+        <span id="show3" class="sh3">补码</span><br>
+    </div>
+
+</body>
+
+</html>
