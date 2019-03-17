@@ -55,6 +55,42 @@ button.sup-btn:active {
 	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
 }
 
+.bttn {
+	display: inline-block;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	vertical-align: middle;
+	color: #393D49;
+	background-color: #009688;
+	text-align: center;
+	cursor: pointer;
+	white-space: nowrap;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+	font-family: "微软雅黑";
+	font-size: 15px;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	outline: 0;
+	padding: 8px 16px;
+	overflow: hidden;
+	text-decoration: none;
+	transition: all 0.5s ease-out 0s;
+	border-radius: 2px;
+}
+.bttn:hover {
+	background-color: #5FB878;
+	color: #393D49;
+	border-radius: 10px;
+}
+
+.bttn:active {
+	color: #393D49;
+	background-color: rgb(66, 133, 85);
+	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+}
 p.showd {
 	text-align: center;
 	color: #FFB800;
@@ -75,7 +111,7 @@ span.sh1 {
 
 span.sh2 {
 	text-align: center;
-	color: #009688;
+	color: #5FB878;
 	font-size: 20px;
 }
 
@@ -84,4 +120,23 @@ span.sh3 {
 	color: #1E9FFF;
 	font-size: 20px;
 }
+input {
+	font-size: 30px;
+	text-align: center;
+	color: #009688;
+	border: none;
+    outline: none;
+	border-bottom: 1px solid #009688;
+	height: 40px;
+	background-color: #2F4056;
+}
+input:focus{
+	height: 40px;
+	text-align: center;
+	font-size: 30px;
+	color: #5FB878;
+	outline: none;
+	border-bottom: 2px solid #5FB878;
+	background-color: #2F4056;
+ }
 

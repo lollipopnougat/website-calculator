@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>进制转换</title>
+    <title>求原反补码器</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="spring.css">
@@ -13,20 +13,24 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btn").click(main);
+            $("#cls").click(function () { document.getElementById("kw").value = ""; });
         });
     </script>
 </head>
 
 <body>
-    <h1 style="color:#FF5722;font-size: 50px;">进制转换</h1>
-    <input type="text" id="kw" /><br>
+    <h1 style="color:#1E9FFF;font-size: 50px;">求原反补码器</h1>
+    <h2 style="color:#eeeeee;font-size: 15px;">默认第一位是符号位</h2>
+    <input type="text" id="kw" class="inp" placeholder="输入十进制数(正负皆可)" />
+    <button class="bttn" id="cls">清除</button><br>
     <div class="support">
         <button class="sup-btn" id="btn">转换</button><br>
     </div>
     <div>
         <span id="show1" class="sh1">原码</span><br>
         <span id="show2" class="sh2">反码</span><br>
-        <span id="show3" class="sh3">补码</span><br>
+        <span id="show3" class="sh3">补码</span><br><br>
+        <span class="sh1">2019·FC</span>
     </div>
 
 </body>
