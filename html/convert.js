@@ -1,4 +1,5 @@
 // -*- coding=utf-8 -*-
+/* jshint esversion: 6 */
 function replacePos(strObj, pos, replacetext) {
     let str = strObj.substr(0, pos) + replacetext + strObj.substring(pos + 1, strObj.length);
     return str;
@@ -26,7 +27,7 @@ function GetOpposite(x) {
     if (x[0] == "0") return x;
     else {
         for (let i = 1; i < x.length; i++) {
-            if (x[i] == "0") x =replacePos(x, i, "1");
+            if (x[i] == "0") x = replacePos(x, i, "1");
             else x = replacePos(x, i, "0");
         }
         return x;
@@ -35,11 +36,21 @@ function GetOpposite(x) {
 
 
 function main() {
-    let num = Number(document.getElementById("kw").value);
-    let numst = num.toString(2);
-    if (num < 0) numst = replacePos(numst, 0, "1");
-    else numst = "0" + numst;
-    document.getElementById("show1").innerHTML = "原码: " + numst;
-    document.getElementById("show2").innerHTML = "反码: " + GetOpposite(numst);
-    document.getElementById("show3").innerHTML = "补码: " + GetComplement(numst);
+    if ($("#kw").val() == "") {
+        mdui.snackbar({
+            message: '输入不能为空！'
+        });
+    } else {
+        let num = Number($("#kw").val());
+        let numst = num.toString(2);
+        if (num < 0) numst = replacePos(numst, 0, "1");
+        else numst = "0" + numst;
+        $("#show1").text("原码: " + numst);
+        $("#show2").text("反码: " + GetOpposite(numst));
+        $("#show3").text("补码: " + GetComplement(numst));
+        mdui.snackbar({
+            message: '转换完毕'
+        });
+    }
+
 }

@@ -105,7 +105,7 @@ p.showd2 {
 
 span.sh1 {
 	text-align: center;
-	color: #FFB800;
+	color: #FF5722;
 	font-size: 20px;
 }
 
@@ -120,8 +120,13 @@ span.sh3 {
 	color: #1E9FFF;
 	font-size: 20px;
 }
+span.sh4 {
+	text-align: center;
+	color: #FFB800;
+	font-size: 20px;
+}
 input {
-	font-size: 30px;
+	font-size: 25px;
 	text-align: center;
 	color: #009688;
 	border: none;
@@ -134,7 +139,7 @@ input {
 input:focus{
 	height: 40px;
 	text-align: center;
-	font-size: 30px;
+	font-size: 25px;
 	color: #5FB878;
 	outline: none;
 	border-bottom: 2px solid #5FB878;
