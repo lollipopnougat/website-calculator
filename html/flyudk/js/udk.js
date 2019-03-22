@@ -1,6 +1,6 @@
 var udk = {
-	flyTimer:null,//小鸟飞翔定时器
-	wingTimer:null,//小鸟翅膀摆动定时器
+	flyTimer:null,//UDK姐贵飞翔定时器
+	wingTimer:null,//UDK姐贵翅膀摆动定时器
 	
 	div:document.createElement("div"),
 	showudk:function(parentObj) {
@@ -13,16 +13,16 @@ var udk = {
 		this.div.style.top = "200px";
 		this.div.style.zIndex = "1";
 		
-		parentObj.appendChild(this.div);  //将小鸟DIV插入游戏界面中
+		parentObj.appendChild(this.div);  //将UDK姐贵DIV插入游戏界面中
 	},
 	
-	fallSpeed: 0, //小鸟下落速度
-	flyudk: function(){ //控制小鸟飞翔下落的函数
+	fallSpeed: 0, //UDK姐贵下落速度
+	flyudk: function(){ //控制UDK姐贵飞翔下落的函数
 		udk.flyTimer = setInterval(fly,40);
 		function fly() {
 			udk.div.style.top = udk.div.offsetTop + udk.fallSpeed++ + "px";
 			if (udk.div.offsetTop < 0) {  
-				udk.fallSpeed = 2; //这里用于控制小鸟不要飞出界面
+				udk.fallSpeed = 2; //这里用于控制UDK姐贵不要飞出界面
 			}
 			if (udk.div.offsetTop >= 395) {
 				udk.fallSpeed = 0;
@@ -35,11 +35,11 @@ var udk = {
 		}
 	},
 	
-	wingWave: function() { //控制小鸟煽动翅膀的函数
+	wingWave: function() { //控制UDK姐贵煽动翅膀的函数
 		var up = ["url(img/up_udk0.png)", "url(img/up_udk1.png)"];
 		var down = ["url(img/down_udk0.png)", "url(img/down_udk1.png)"];
 		var i = 0, j = 0;
-		udk.wingTimer = setInterval(wing,120);//逐帧动画，小鸟煽动翅膀
+		udk.wingTimer = setInterval(wing,120);//逐帧动画，UDK姐贵煽动翅膀
 		function wing() {
 			if (udk.fallSpeed > 0) {
 				udk.div.style.backgroundImage = down[i++];

@@ -6,17 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Fly UDK</title>
 	<link rel="stylesheet" type="text/css" href="css/index.css" />
-	
 </head>
 
 <body>
-	<embed src="audio/jinja.mp3" autostart="true" loop="true" hidden="true"></embed>
+	<embed src="audio/jinja.mp3" autostart="true" loop="true" hidden="true" ></embed>
 	<div id="wrapBg">
 		<!--游戏背景-->
 		<div id="headTitle">
 			<!--开始标题-->
 			<img id="udk" src="img/udk0.png" alt="UDK" />
-			<!--标题中的小鸟-->
+			<!--标题中的UDK-->
 		</div>
 		<button id="startBtn"></button>
 		<!--开始按钮-->
@@ -43,7 +42,7 @@
 <script type="text/javascript">
 	var jsWrapBg = document.getElementById("wrapBg");
 	var jsHeadTitle = document.getElementById("headTitle"); // 获取标题
-	var jsHeadudk = document.getElementById("udk"); // 获取标题中小鸟
+	var jsHeadudk = document.getElementById("udk"); // 获取标题中UDK姐贵
 	var blocksArr = []; //用来储存block的数组
 	var blockDistance = baseObj.randomNum(120, 350);
 
@@ -59,7 +58,7 @@
 	var Y = 3; //标题的摆动幅度
 	var index = 0;
 	var imgArr = ["img/udk0.png", "img/udk1.png"]
-	//将小鸟图片路径放入一个数组，利用帧动画的原理做出小鸟翅膀摆动的样子
+	//将UDK姐贵图片路径放入一个数组，利用帧动画的原理做出UDK姐贵翅膀摆动的样子
 	var headWaveTimer = setInterval(headWave, 200); //设置标题上下摆动的定时器
 	function headWave() {
 		Y *= -1;
@@ -92,7 +91,7 @@
 				var z = udk.div.offsetTop >= 390;
 				if (x || y || z) {
 					window.clearInterval(landTimer); //清除landTimer定时器
-					udk.fallSpeed = 0; //小鸟下落
+					udk.fallSpeed = 0; //UDK姐贵下落
 					jsWrapBg.onclick = null; //消除点击事件
 					jsScore.style.display = "none"; //隐藏计分器
 					jsGameOver.style.display = "block"; // 显示gameover面板
@@ -136,9 +135,9 @@
 		jsHeadTitle.style.display = "none"; //隐藏标题
 		clearInterval(headWaveTimer); //关闭让标题摆动的定时器
 		jsStartBtn.style.display = "none"; //隐藏按键
-		udk.showudk(jsWrapBg); //插入小鸟到界面中
-		udk.flyudk(); //控制小鸟飞翔下落
-		udk.wingWave(); //逐帧动画，小鸟煽动翅膀
+		udk.showudk(jsWrapBg); //插入UDK姐贵到界面中
+		udk.flyudk(); //控制UDK姐贵飞翔下落
+		udk.wingWave(); //逐帧动画，UDK姐贵煽动翅膀
 		jsWrapBg.onclick = function () {
 			udk.fallSpeed = -8;
 		};
