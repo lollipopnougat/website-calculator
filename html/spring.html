@@ -20,10 +20,19 @@
 </head>
 
 <body>
+    <audio hidden="hidden" src="flyudk/audio/jinja.mp3" id="mu">????</audio>
     <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item"><a href="">贺卡</a></li>
+        <li class="layui-nav-item"><a href="">贺卡</a></li>
     </ul>
-    <button class="layui-btn layui-btn-normal" id="btn1">一个标准的按钮</button>
+    <button class="layui-btn layui-btn-normal" id="btn1" onclick="fun()">一个标准的按钮</button>
+    <script>
+        function fun() {
+            var music = document.getElementById("mu");
+            if (music.paused) {
+                music.play();
+            }
+        }
+    </script>
 </body>
 
 </html>
