@@ -1,0 +1,28 @@
+body {
+    background-color: #dadada;
+}
+
+#box {
+    background-color: rgb(21, 155, 233);
+    width: 450px;
+    height: 450px;
+    position: relative;
+    margin: 80px 350px;
+}
+
+#box div {
+    float: left;
+    position: relative;
+    background-color: #E0DFE4;
+    border: 2px;
+    border-radius: 2px;
+    height: 60px;
+    width: 60px;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+#img {
+    position: relative;
+    float: left;
+}

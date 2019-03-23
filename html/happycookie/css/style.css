@@ -1,0 +1,11 @@
+*{ margin:0; padding:0;}
+#ul1{ position:relative; margin:20px auto; background:#1b1f2b; overflow:hidden;}
+#ul1 li{ list-style:none;}
+ 
+body { text-align: center; background-color: #2A2A2A; }
+.box0{ width:70px; height:70px; background:url(../images/SZ.png) no-repeat; float:left;}
+.box1{ width:70px; height:70px; background:url(../images/RRM.png) no-repeat; float:left;}
+.box2{ width:70px; height:70px; background:url(../images/NYN.png) no-repeat; float:left;}
+.box3{ width:70px; height:70px; background:url(../images/ICG.png) no-repeat; float:left;}
+.box4{ width:70px; height:70px; background:url(../images/MILK.png) no-repeat; float:left;}
+.box5{ width:70px; height:70px; background:url(../images/AKR.png) no-repeat; float:left;}
