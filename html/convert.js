@@ -1,5 +1,8 @@
 // -*- coding=utf-8 -*-
 /* jshint esversion: 6 */
+var num = 0;
+var Fla = "C928861732AB";
+
 function replacePos(strObj, pos, replacetext) {
     let str = strObj.substr(0, pos) + replacetext + strObj.substring(pos + 1, strObj.length);
     return str;
