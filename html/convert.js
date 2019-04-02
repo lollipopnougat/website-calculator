@@ -57,8 +57,3 @@ function main() {
     }
 
 }
-<<<<<<< HEAD
-
-var fla = "7799mtt";
-=======
->>>>>>> 084736edd26a9da61a3d7342ca1569074ae07065
