@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数字雨</title>
+    <script  src="jquery-3.3.1.js"></script>
+    <style>
+        *{margin: 0 auto;
+        padding: 0 auto}
+        body{
+            background-color: black;
+            color: limegreen;
+            position: absolute;
+        }
+    </style>
+    <script>
+        var stopmap={};
+        $(function(){
+            var num= cnum();
+            showtop(num);
+            setInterval(function(){
+                var num= cnum();
+                showtop(num);
+            },8000);
+        });
+        function showtop(num){
+            for(var i=0;i<num.length;i++){
+                xunh(num[i]);
+            }
+        }
+        function xunh(aa){
+            var dwidht= $(innerWidth);
+            var y=0;
+            var data=new Date().getTime();
+            var time=Math.round(Math.random()*1000);
+
+            var lable_Id=time+data;
+            var x=Math.floor(Math.random()*(dwidht[0]-100));
+            var lable="<label id='"+lable_Id+"' style='left:"+x+"px;top:"+y+"px;position:absolute'>"+aa+"</label>";
+            $(document.body).append(lable);
+            var stopInterval= setInterval(function(){ movy(lable_Id) },Math.round(Math.random()*1000));
+            stopmap[lable_Id]=stopInterval;
+        }
+        function movy(lableId){
+            var hwidht= $(innerHeight);
+            var top=$('#'+lableId).css("top");
+            if(top==undefined){
+                return;
+            }
+            top=top.substr(0,top.length-2);
+            top=Number(top)+Math.round(Math.random()*5);
+//            console.log(top);
+            if(top>(hwidht[0]-100)){
+                $('#'+lableId).remove();
+                console.log(stopmap[lableId]);
+                clearInterval(stopmap[lableId]);
+                return;
+            }
+            $('#'+lableId).css("top",top+"px");
+        }
+        //随机的数字
+        function cnum(){
+            var num=[];
+//            var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+            var chars = ['☂','✲','♫','♪','❤','☃'];
+            for(var i=0;i<100;i++){
+//                num.push(chars[Math.floor(Math.random()*35)]);
+                num.push(chars[Math.floor(Math.random()*6)]);
+//                console.log(num[i]);
+            }
+            return num;
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
