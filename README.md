@@ -1,66 +1,46 @@
 # website-calculator
-一个简单的网页计算器，[静态页面](https://lollipopnougat.github.io/website-calculator/)<br/>
-实际上被用来盛放杂物获取直链（逃）<br/>
 
-可以看到目录结构为
-```
-.gitattributes
-│  index.html
-│  LICENSE
-│  README.md
-│
-├─css
-│      style.css
-│
-├─files
-│      TH125-1.mp4
-│
-├─fonts
-│      consya.ttf
-│      FZZQJW.TTF
-│      MAGNETOB.TTF
-│      msyh.ttc
-│
-├─hivideo
-│  │  hivideo.js
-│  │  index.html
-│  │  README.md
-│  │
-│  └─assets
-│      │  hivideo.css
-│      │  video.mp4
-│      │
-│      └─images
-│              fullscreen.png
-│              fullscreen_off.png
-│              mute.png
-│              pause.png
-│              play-big.png
-│              play.png
-│              stop.png
-│              volume.png
-│
-├─html
-│      HTML1.html
-│      index.js
-│      style.css
-│      TBroswer.html
-│
-├─img
-│      33110314.png
-│      bg1.jpg
-│      favicon.ico
-│      HappyNewYear.jpg
-│      HappyNewYears.jpg
-│      HapyNewYear.gif
-│      newyear.gif
-│      powershell.png
-│      screenshot.png
-│
-├─js
-│      javascript.js
-│
-└─videos
-```
+## 一个简单的网页计算器
 
+[计算器页面](https://lollipopnougat.github.io/website-calculator/)
+<br/>
+实际上被用来盛放杂物获取直链（逃）
+<br/>
 
+## 可以尝试访问下列文件查看效果：
+
+### 2048游戏（来源网络）
+
+[2048.html](https://lollipopnougat.github.io/website-calculator/html/2048.html)
+
+### 原反补码转换器（负的浮点数有问题）
+
+[convert.html](https://lollipopnougat.github.io/website-calculator/html/convert.html)
+
+### HTML教程1（弃坑了）
+
+[HTML1.html](https://lollipopnougat.github.io/website-calculator/html/HTML1.html)
+
+### PowerShell入门3
+
+[PowerShellTips3.html](https://lollipopnougat.github.io/website-calculator/html/PowerShellTips3.html)
+<br/>
+另外两篇在我的[博客](https://lollipopnougat.github.io/Crepeblog)上
+<br/>
+这可能是我写的最长的东西了，参考了很多网络资料（[pstips.net](https://www.pstips.net/)）
+
+### 俄罗斯方块（慎入，极其简陋，核心部分来源网络）
+
+[Rublock](https://lollipopnougat.github.io/website-calculator/html/Rublock.html)
+
+### 俄罗斯方块（仅电脑版适用，来源网络）
+
+[Rublock2](https://lollipopnougat.github.io/website-calculator/html/Rublock2.html)
+
+### 黑客风数字雨（来源网络）
+
+[stringrain.html](https://lollipopnougat.github.io/website-calculator/html/stringrain.html)
+
+### 浏览器检测（练习使用js正则，读取UA，有bug的话请反馈）
+
+[TBroswer.html](https://lollipopnougat.github.io/website-calculator/html/TBroswer.html)
