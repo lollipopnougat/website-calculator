@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <meta name="copyright" content="LNP" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <div class="htmleaf-container">
+        <div class="wrapper">
+            <div class="container">
+                <h1>生日快乐</h1>
+
+                <form class="form">
+                    <input id="userName" name="userName" type="text" placeholder="姓名" value="我的朋友">
+                    <input id="pwd" name="pwd" type="password" placeholder="密码" value="123">
+                    <button type="submit" id="login-button">进入</button>
+                </form>
+            </div>
+
+            <ul class="bg-bubbles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $('#login-button').click(function (event) {
+            var userName = document.getElementById("userName").value;
+            var pwd = document.getElementById("pwd").value;
+            if (userName == "我的朋友" && pwd == "123") {
+                event.preventDefault();
+                $('form').fadeOut(500);
+                $('.wrapper').addClass('form-success');
+                setTimeout(function () {
+                    location.href = "./cake.html";
+                }, 2000);
+            } else {
+                alert("Wrong Password");
+            }
+        });
+    </script>
+</body>
+
+</html>
