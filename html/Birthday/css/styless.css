@@ -280,8 +280,8 @@ body {
 
 .happy {
 	position:absolute;
-	left:41%;
-	top:49%;
+	left:10%;
+	top:50%;
 	opacity: 1;
 	animation: happybirthdays 10s;
 	animation-delay: 0s;
