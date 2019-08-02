@@ -9,9 +9,9 @@
 
 ## 可以尝试访问下列文件查看效果：
 
-### 2048游戏（来源网络）
+### 新版2048游戏（核心算法来源网络，本人的主要工作是对界面进行了移动适配，还做了触控操作功能）
 
-[2048.html](https://lollipopnougat.github.io/website-calculator/html/2048.html)
+[2048.html](https://lollipopnougat.github.io/website-calculator/html/2048neo.html)
 
 ### 原反补码转换器（负的浮点数有问题）
 
