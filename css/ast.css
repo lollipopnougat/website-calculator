@@ -93,11 +93,8 @@ h1.cal {
   color: #00e676;
   font-size: 50px;
   font-family: 微软雅黑;
-  margin-bottom: 10px;
 }
-p,
-span,
-div.vers {
+p {
   text-align: center;
 }
 p.scr {
@@ -109,7 +106,6 @@ p.sho {
   color: #29b6f6;
   font-size: 15px;
   font-family: consolas;
-  height: 17px;
 }
 span.version {
   margin: 0px;

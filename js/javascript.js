@@ -2,7 +2,7 @@ var result = 0, temp1 = 0, str1 = "", str ="0";
 var flag;
 document.oncontextmenu = new Function("event.returnValue=false;"); //禁用右键菜单功能
 document.onselectstart = new Function("event.returnValue=false;"); //禁止用户选中网页上的内容
-alert("欢迎使用计算器！");
+//alert("欢迎使用计算器！");
 console.log("简单计算器V1.2");
 console.log("更新解决了结果超过10位被截掉的问题\n页面部分样式变动");
 /*
