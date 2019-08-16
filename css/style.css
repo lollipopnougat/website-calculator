@@ -21,6 +21,7 @@ button {
   vertical-align: middle;
   color: #fff;
   background-color: #e9686b;
+  font-size: 20px;
   text-align: center;
   cursor: pointer;
   white-space: nowrap;
@@ -31,7 +32,7 @@ button {
   border-color: initial;
   border-image: initial;
   outline: 0;
-  padding: 12px 32px;
+  padding: 16px 42px;
   overflow: hidden;
   text-decoration: none;
   transition: all 0.2s ease-out 0s;
@@ -53,7 +54,7 @@ button.butt:active {
 button.buttb {
   background-color: #68c0e8;
   color: #1e1e1e;
-  padding: 12px 108px;
+  padding: 16px 135px;
 }
 button.buttb:hover {
   background-color: #3caee1;
@@ -104,6 +105,7 @@ p.scr {
   color: #ffc400;
   font-size: 30px;
   font-family: consolas;
+  height: 32px;
 }
 p.sho {
   color: #29b6f6;

@@ -1,4 +1,3 @@
-
 @bgcolor: #3f3f3f;
 @btnred: #e9686b;
 @btnblue: #68c0e8;
@@ -11,188 +10,168 @@
 @textgrey2: #e2e2e2;
 @shadowcolor1: rgba(0, 0, 0, 0.12);
 @shadowcolor2: rgba(0, 0, 0, 0.24);
-@btnpaddingw: 12px;
-@btnpaddingl: 32px;
+@btnpaddingw: 16px;
+@btnpaddingl: 42px;
+@btnpaddings: 135px;
 @btnradius: 2px;
+@btntextsize: 20px;
 /*-------------------------禁止选择-------------------------*/
-body
-{
-	background: @bgcolor;
-	margin: 0;
-	-moz-user-select: none; 
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	-khtml-user-select: none;
-	user-select: none;
+body {
+  background: @bgcolor;
+  margin: 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 
 /*-------------------------网格视图-------------------------*/
-.wrapper
-{ 
-	grid-column: 1 / 4; 
-	grid-row: 1; 
+.wrapper {
+  grid-column: 1 / 4;
+  grid-row: 1;
 }
 /*-------------------------按钮样式-------------------------*/
-button
-{
-	display: inline-block;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	vertical-align: middle;
-	color: @textwhite;
-	background-color: @btnred;
-	text-align: center;
-	cursor: pointer;
-	white-space: nowrap;
-	box-shadow: @shadowcolor1 0px 2px 6px, @shadowcolor2 0px 1px 2px;
-	font-family: Consolas;
-	border-width: initial;
-	border-style: none;
-	border-color: initial;
-	border-image: initial;
-	outline: 0;
-	padding: @btnpaddingw @btnpaddingl;
-	overflow: hidden;
-	text-decoration: none;
-	transition: all 0.2s ease-out 0s;
-	border-radius: @btnradius;
+button {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  vertical-align: middle;
+  color: @textwhite;
+  background-color: @btnred;
+  font-size: @btntextsize;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: @shadowcolor1 0px 2px 6px, @shadowcolor2 0px 1px 2px;
+  font-family: Consolas;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  outline: 0;
+  padding: @btnpaddingw @btnpaddingl;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.2s ease-out 0s;
+  border-radius: @btnradius;
 }
 /*-------------------------过渡动画-------------------------*/
-.butt(@color1, @value, @textcolor) 
-{
-        background-color: darken(@color1, @value);
-        color: @textcolor; 
+
+.butt(@color1, @value, @textcolor) {
+  background-color: darken(@color1, @value);
+  color: @textcolor;
 }
 
-
-
-button.butt
-{
-    .butt(@btnred, 0%, @textgrey1);
-	//background-color: @btnred;
-	//color: #1a1a1a;
+button.butt {
+  .butt(@btnred, 0%, @textgrey1);
+  //background-color: @btnred;
+  //color: #1a1a1a;
 }
-button.butt:hover
-{
-    .butt(@btnred, 10%, @textgrey2);
-	//background-color: darken(@btnred, 10%);
-	//color: #efefef;
+button.butt:hover {
+  .butt(@btnred, 10%, @textgrey2);
+  //background-color: darken(@btnred, 10%);
+  //color: #efefef;
 }
-button.butt:active
-{
-    .butt(@btnred, 30%, @textwhite);
-	//background-color: darken(@btnred, 30%);
-	//color: #ffffff;
+button.butt:active {
+  .butt(@btnred, 30%, @textwhite);
+  //background-color: darken(@btnred, 30%);
+  //color: #ffffff;
 }
-button.buttb
-{
-    .butt(@btnblue, 0%, @textgrey1);
-    //color: #3f3f3f;
-	//background-color: #68c0e8;
-	padding: @btnpaddingw 108px;
+button.buttb {
+  .butt(@btnblue, 0%, @textgrey1);
+  //color: #3f3f3f;
+  //background-color: #68c0e8;
+  padding: @btnpaddingw @btnpaddings;
 }
 
-button.buttb:hover
-{
-    .butt(@btnblue, 10%, @textwhite);
-    //background-color: #5093b3;
-	//color: #ffffff;
+button.buttb:hover {
+  .butt(@btnblue, 10%, @textwhite);
+  //background-color: #5093b3;
+  //color: #ffffff;
 }
-button.buttb:active
-{
-    .butt(@btnblue, 30%, @textwhite);
-	//background-color: #345f73;
-	//color: #ffffff;
+button.buttb:active {
+  .butt(@btnblue, 30%, @textwhite);
+  //background-color: #345f73;
+  //color: #ffffff;
 }
 
-button.butty
-{
-    .butt(@btnyellow, 0%, @textgrey1);
-	//color: #000000;
-	//background-color: #e8d868;
+button.butty {
+  .butt(@btnyellow, 0%, @textgrey1);
+  //color: #000000;
+  //background-color: #e8d868;
 }
-button.butty:hover
-{
-    .butt(@btnyellow, 10%, @textwhite);
-	//background-color: #b3a550;
-	//color: #ffffff;
+button.butty:hover {
+  .butt(@btnyellow, 10%, @textwhite);
+  //background-color: #b3a550;
+  //color: #ffffff;
 }
-button.butty:active
-{
-    .butt(@btnyellow, 30%, @textwhite);
-	//background-color: #807320;
-	//color: #ffffff;
+button.butty:active {
+  .butt(@btnyellow, 30%, @textwhite);
+  //background-color: #807320;
+  //color: #ffffff;
 }
 
-button.buttg
-{
-    .butt(@btngreen, 0%, @textgrey1);
-	//color: #2b2b2b;
-	//background-color: #68e974;
+button.buttg {
+  .butt(@btngreen, 0%, @textgrey1);
+  //color: #2b2b2b;
+  //background-color: #68e974;
 }
-button.buttg:hover
-{
-    .butt(@btngreen, 10%, @textgrey2);
-	//background-color: #50b35a;
-	//color: #efefef;
+button.buttg:hover {
+  .butt(@btngreen, 10%, @textgrey2);
+  //background-color: #50b35a;
+  //color: #efefef;
 }
-button.buttg:active
-{
-    .butt(@btngreen, 30%, @textgrey2);
-	//background-color: #34733a;
-	//color: #efefef;
+button.buttg:active {
+  .butt(@btngreen, 30%, @textgrey2);
+  //background-color: #34733a;
+  //color: #efefef;
 }
 
 /*-------------------------文字样式-------------------------*/
-h1.cal
-{
-	text-align: center;
-	color: #00e676;
-	font-size: 50px;
-    font-family: 微软雅黑;
-    margin-bottom: 10px;
+h1.cal {
+  text-align: center;
+  color: #00e676;
+  font-size: 50px;
+  font-family: 微软雅黑;
+  margin-bottom: 10px;
 }
-p,span, div.vers
-{
-	text-align: center;
+p,
+span,
+div.vers {
+  text-align: center;
 }
-p.scr
-{
-	color: #ffc400;
-	font-size: 30px;
-	font-family: consolas;
+p.scr {
+  color: #ffc400;
+  font-size: 30px;
+  font-family: consolas;
+  height: 32px;
 }
-p.sho
-{
-	color: #29b6f6;
-	font-size: 15px;
-    font-family: consolas;
-    height: 17px;
+p.sho {
+  color: #29b6f6;
+  font-size: 15px;
+  font-family: consolas;
+  height: 17px;
 }
-span.version
-{
-	margin: 0px;
-	color: #ea80fc;
-	font-size: 10px;
-	font-family: 微软雅黑;
+span.version {
+  margin: 0px;
+  color: #ea80fc;
+  font-size: 10px;
+  font-family: 微软雅黑;
 }
-a
-{
-	text-align: center;
-	font-size: 20px;
-	font-family: 微软雅黑;
+a {
+  text-align: center;
+  font-size: 20px;
+  font-family: 微软雅黑;
 }
-a:link 
-{
-	color: @linkcolor; 
-	text-decoration: none;
+a:link {
+  color: @linkcolor;
+  text-decoration: none;
 }
-a:hover
-{
-	color: @linkcolorhover;
-	text-decoration: underline;
+a:hover {
+  color: @linkcolorhover;
+  text-decoration: underline;
 }
-div
-{
-	text-align: center;
+div {
+  text-align: center;
 }
