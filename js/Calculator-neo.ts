@@ -1,11 +1,11 @@
-class Calculator {
+class CalculatorNeo {
     public constructor(parameters?: string) {
         if (parameters) {
             this.OrExpression = parameters;
             this.IsSet = true;
         }
     }
-    public SetNew(oe: string) {
+    public SetNew = (oe: string) => {
         this.OrExpression = oe;
         this.IsSet = true;
         this.ops.length = 0;
@@ -24,12 +24,12 @@ class Calculator {
     };
     private ops: Array<string> = new Array<string>();
     private nums: Array<number> = new Array<number>();
-    private IsHigherThanTop(op: string): boolean {
+    private IsHigherThanTop = (op: string): boolean => {
         if (this.ops.length == 0) return true;
         else if (this.OpPLDictionary[op] > this.OpPLDictionary[this.ops[this.ops.length - 1]]) return true;
         else return false;
     }
-    private CalculateOne() {
+    private CalculateOne = () => {
         let tmpOp = this.ops.pop();
         let rhs = this.nums.pop();
         let lhs = this.nums.pop();
@@ -43,7 +43,7 @@ class Calculator {
         }
         this.nums.push(tmpRes);
     }
-    public GetResult(): number {
+    public GetResult = (): number => {
         if (!this.IsSet) throw new Error("未初始化表达式");
         this.IsSet = false;
         let tmpNum = '';
@@ -84,130 +84,4 @@ class Calculator {
     }
 }
 
-var result = 0;
-var str1 = "";
-var str = "0";
-//document.oncontextmenu = new Function("event.returnValue=false;"); //禁用右键菜单功能
-//document.onselectstart = new Function("event.returnValue=false;");
-document.oncontextmenu = () => {
-    event.returnValue = false;
-}
-
-document.onselectstart = () => {
-    event.returnValue = false;
-}
-
-console.log("简单计算器V1.3");
-console.log("v1.2更新解决了结果超过10位被截掉的问题\n页面部分样式变动");
-console.log("v1.3更新使用了less重写css\n解决结果显示区域跳动问题\n去掉了奇怪的提示\n页面布局变化");
-console.log("v2.0更新 核心算法使用TypeScript重构,支持运算符优先级,支持括号");
-
-
-//等号
-function preRes () {
-    try {
-        let cal = new Calculator(str1);
-        result = cal.GetResult();
-        let tem = result;
-        if (result - tem !== 0) str = String(result.toFixed(14)); //！== === js特有，因为使用!=在WS里Warning
-        else str = String(result);
-        str = parseFloat(str).toString();
-        console.log('结果: '+ str);
-        //str = cal.GetResult().toString();
-        document.getElementById("scr").innerHTML = str;
-    } catch (error) {
-        alert(error.toString() + "请检查语法");
-    }
-
-}
-
-
-function Input(y: string) {
-    str1 += y;
-    document.getElementById("sho").innerHTML = str1;
-}
-//1~0以及.的输入
-function pre1() {
-    Input("1");
-}
-
-function pre2() {
-    Input("2");
-}
-
-function pre3() {
-    Input("3");
-}
-
-function pre4() {
-    Input("4");
-}
-
-function pre5() {
-    Input("5");
-}
-
-function pre6() {
-    Input("6");
-}
-
-function pre7() {
-    Input("7");
-}
-
-function pre8() {
-    Input("8");
-}
-
-function pre9() {
-    Input("9");
-}
-
-function pre0() {
-    Input("0");
-}
-
-function preleft() {
-    Input("(");
-}
-
-function preright() {
-    Input(")");
-}
-
-function preP() {
-    Input(".");
-}
-
-function preD() {
-    if (str1 != "") {
-        str1 = str1.substr(0, str1.length - 1);
-        document.getElementById("sho").innerHTML = str1;
-    } else alert("已经没有东西了！！");
-}
-
-function preAC() //清除
-{
-    str1 = "";
-    result = 0;
-    str = "";
-    document.getElementById("scr").innerHTML = "结果";
-    document.getElementById("sho").innerHTML = "当前值";
-}
-
-function preAdd() {
-    Input("+");
-}
-
-function preSub() {
-    Input("-");
-}
-
-function preMul() {
-    Input("*");
-}
-
-function preDiv() {
-    Input("/");
-}
 
