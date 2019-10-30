@@ -32,7 +32,7 @@ button {
   border-color: initial;
   border-image: initial;
   outline: 0;
-  padding: 16px 38px;
+  padding: 16px 32px;
   overflow: hidden;
   text-decoration: none;
   transition: all 0.2s ease-out 0s;
@@ -54,7 +54,7 @@ button.butt:active {
 button.buttb {
   background-color: #68c0e8;
   color: #1e1e1e;
-  padding: 16px 38px;
+  padding: 16px 32px;
 }
 button.buttb:hover {
   background-color: #3caee1;

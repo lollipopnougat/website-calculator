@@ -1,38 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script>
+        function press() {
+            alert("press");
+        }
+    </script>
 </head>
 
 <body>
-    <div class="box">
-        <span>1234567890</span>
-        <span>dgjhg</span>
+    <div class="box red">
+        <span id="box">1234567890</span><br>
+        <input value="12" name="" id="input" />
+        <span id="box">dgjhg</span>
+        <button onclick="press()">123456</button>
         <p>123</p>
     </div>
     <a href="http://www.baidu.com">baidu</a>
     <script>
-        console.log("123");
-        let i = 0;
-        i++;
-        console.log(i);
-        console.log(i);
+        i = $("#input").val();
     </script>
     <style>
         p {
             color: #f00;
             text-align: center;
         }
-        .box {
+
+        .red {}
+
+        div.box {
             display: block;
             width: 50%;
             height: 50%;
             background: #0ff;
+        }
+
+        button {
+            background: rgb(115, 255, 0);
+            border: black solid 2px;
+            border-radius: 10px;
+            height: 100px;
+        }
+
+        button:hover {
+            background: #00b7ff;
+        }
+
+        button:active {
+            background: #ff0000;
         }
     </style>
 </body>
