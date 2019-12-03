@@ -57,3 +57,27 @@ function main() {
     }
 
 }
+
+function copy(inp) {
+    let i;
+    switch(inp) {
+        case 1: i = $("#show1").text();break;
+        case 2: i = $("#show2").text();break;
+        case 3: i = $("#show3").text();break;
+        default: i = null;
+    }
+    let oInput = document.createElement("input");
+    i = i.split(' ');
+    if (i.length == 1) mdui.snackbar({ message: '不能复制空结果' });
+    else {
+        oInput.value = i[1];
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = "oInput";
+        oInput.style.display="none";
+        mdui.snackbar({
+            message: '已复制'
+        });
+    } 
+}
