@@ -4,11 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Hacker effects</title>
+    <style>
+        canvas {
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+            z-index: -1;
+        }
+    </style>
 </head>
 
 <body>
-    <canvas id="c"></canvas>
-    <script>
+    <!-- <canvas id="c"></canvas> -->
+    <!-- 数字雨 -->
+    <canvas id="canvas" width="1440" height="900"></canvas>
+    <script type="text/javascript" src="./DigitalRain.js"></script>
+    <!-- <script>
         var c = document.getElementById("c");
         var ctx = c.getContext("2d");
         c.width = window.innerWidth;
@@ -39,7 +54,7 @@
             }
         }
         setInterval(drap, 20);
-    </script>
+    </script> -->
 </body>
 
 </html>
