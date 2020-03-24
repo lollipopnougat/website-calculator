@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AV/BV互转</title>
+</head>
+
+<body>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        header>h2 {
+            text-align: center;
+            font-size: 45px;
+            color: #5678ff;
+            letter-spacing: 1px;
+            transition: all 0.8s ease-out 0s;
+        }
+
+        header>h2:hover {
+            color: #673AB7;
+            letter-spacing: 16px;
+        }
+
+        header>h2:active {
+            color: #00E676;
+            letter-spacing: 32px;
+        }
+
+        header>h4 {
+            text-align: center;
+            font-size: 15px;
+            color: #ffb74d;
+            letter-spacing: 2px;
+            transition: all 0.2s ease-out 0s;
+        }
+
+        header>h4:hover {
+            color: #20AFB42B;
+            letter-spacing: 6px;
+        }
+
+        header>h4:active {
+            color: #ffffff;
+            letter-spacing: 8px;
+        }
+
+        div.content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        div.content>textarea {
+            width: 30em;
+            height: 12em;
+            margin: 1em;
+        }
+
+        div.content>.buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        footer>p {
+            text-align: center;
+        }
+
+
+        button {
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            vertical-align: middle;
+            color: rgb(255, 255, 255);
+            background-color: #ff8a80;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            font-family: Consolas;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            outline: 0;
+            padding: 8px 16px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.5s ease-out 0s;
+            border-radius: 2px;
+        }
+
+        button.btn {
+            color: rgb(255, 255, 255);
+            background-color: rgb(233, 104, 107);
+        }
+
+        button.btn1 {
+            color: rgb(255, 255, 255);
+            background-color: #5678ff;
+            font-size: 15px;
+        }
+
+        button.btn2 {
+            color: rgb(255, 255, 255);
+            background-color: #FFA000;
+            ;
+        }
+
+        /*---------鼠标悬停过渡动画---------*/
+        button.btn:hover {
+            background-color: #b35052;
+            color: #efefef;
+        }
+
+        button.btn:active {
+            background-color: #882729;
+            color: #afafaf;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+        }
+
+        button.btn1:hover {
+            color: #212121;
+            background-color: #0089ff;
+            padding: 8px 64px;
+            border-radius: 10px;
+        }
+
+        button.btn1:active {
+            color: #ffffff;
+            background-color: #004488;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+        }
+
+        button.btn2:hover {
+            color: #ffffff;
+            background-color: #aa8800;
+
+        }
+
+        button.btn2:active {
+            color: #ffffff;
+            background-color: #886600;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
+        }
+
+        a:visited {
+            color: #0089ff;
+        }
+
+        a:hover {
+            color: #00E676;
+        }
+
+        a:active {
+            color: #FFA000;
+        }
+    </style>
+    <header>
+        <h2>B站BVAV地址转换</h2>
+    </header>
+    <div class="content">
+        <textarea id="decoded-area" placeholder="BV"></textarea>
+        <div class="buttons">
+
+            <button id='encode-btn' class="btn">BV 转 AV &gt;&gt;</button>
+
+            <button id='decode-btn' class="btn">&lt;&lt; AV 转 BV</button>
+
+        </div>
+        <textarea id="encoded-area" placeholder="AV"></textarea>
+    </div>
+    <div class="content">
+        <button class="btn" id="copy-decode">复制解码结果</button>
+        <p>&nbsp;&nbsp;</p>
+        <button class="btn2" onclick="clearAll()">清除全部</button>
+        <p>&nbsp;&nbsp;</p>
+        <button class="btn" id="copy-encode">复制编码结果</button>
+
+    </div>
+
+    <footer>
+        <p>Source Code Reference to <a href="https://www.zhihu.com/people/-._.-">mcfx</a></p>
+        <p>LNP&sdot;2020</p>
+    </footer>
+    <script>
+        var table = 'fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF';
+        tr = {};
+        for (let i = 0; i < 58; i++) {
+            tr[table[i]] = i;
+        }
+        
+        var s = [11, 10, 3, 8, 4, 6]
+        var xor = 177451812
+        var add = 8728348608
+
+        // BV2AV
+        function dec(x) {
+           let r = 0;
+           for (let i = 0; i < 6; i++) {
+                r += tr[x[s[i]]] * 58**i
+           }
+           return (r - add) ^ xor;
+        }
+
+        function enc(x) {
+            x = (x ^ xor) + add;
+            let r = ['B', 'V', '1', ' ', ' ', '4', ' ', '1', ' ', '7', ' ', ' '];
+            for (let i = 0; i < 6; i++) {
+                let tmp = Math.floor(x / Math.pow(58,i)); 
+                r[s[i]] = table[tmp % 58];
+            }
+            return r.join("");
+        }
+        
+        function copyText(which) {
+            let text;
+            if(which==0) {
+                text = document.getElementById("decoded-area").value;
+            } else {
+                text = document.getElementById("encoded-area").value;
+            }
+            let oInput = document.createElement("input");
+            if (text == "") alert("拷贝失败，数据是空的");
+            else {
+                oInput.value = text;
+                document.body.appendChild(oInput);
+                oInput.select(); // 选择对象
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                oInput.className = "oInput";
+                oInput.style.display = "none";
+                alert("复制成功");
+            }
+        }
+        document.getElementById("copy-decode").onclick = () => copyText(0);
+        document.getElementById("copy-encode").onclick = () => copyText(1);
+        document.getElementById('encode-btn').onclick = () => {
+            document.getElementById('encoded-area').value = dec(document.getElementById('decoded-area').value);
+        }
+        document.getElementById('decode-btn').onclick = () => {
+            document.getElementById('decoded-area').value = enc(document.getElementById('encoded-area').value);
+        }
+
+
+        
+    </script>
+</body>
+
+</html>
