@@ -178,16 +178,16 @@
         <textarea id="encoded-area" placeholder="AV"></textarea>
     </div>
     <div class="content">
-        <button class="btn" id="copy-decode">复制解码结果</button>
+        <button class="btn" id="copy-decode">复制BV结果</button>
         <p>&nbsp;&nbsp;</p>
-        <button class="btn2" onclick="clearAll()">清除全部</button>
+        <button class="btn2" id="clear">清除全部</button>
         <p>&nbsp;&nbsp;</p>
-        <button class="btn" id="copy-encode">复制编码结果</button>
+        <button class="btn" id="copy-encode">复制AV结果</button>
 
     </div>
 
     <footer>
-        <p>Source Code Reference to <a href="https://www.zhihu.com/people/-._.-">mcfx</a></p>
+        <p>Source Code Reference to <a href="https://www.zhihu.com/question/381784377/answer/1099438784">mcfx's answer</a>.</p>
         <p>LNP&sdot;2020</p>
     </footer>
     <script>
@@ -214,7 +214,7 @@
             x = (x ^ xor) + add;
             let r = ['B', 'V', '1', ' ', ' ', '4', ' ', '1', ' ', '7', ' ', ' '];
             for (let i = 0; i < 6; i++) {
-                let tmp = Math.floor(x / Math.pow(58,i)); 
+                let tmp = Math.floor(x / 58**i); 
                 r[s[i]] = table[tmp % 58];
             }
             return r.join("");
@@ -246,6 +246,10 @@
         }
         document.getElementById('decode-btn').onclick = () => {
             document.getElementById('decoded-area').value = enc(document.getElementById('encoded-area').value);
+        }
+        document.getElementById('clear').onclick = () => {
+            document.getElementById('encoded-area').value = "";
+            document.getElementById('decoded-area').value = "";
         }
 
 
