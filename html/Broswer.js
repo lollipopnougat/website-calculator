@@ -60,7 +60,7 @@ function getexp() {
     var EdgeVersion = new RegExp("Edge/\\d*.\\d*");
     var includeSafari = /Safari/;
     var isWin = /Windows NT \d+.\d*/i;
-    var isAndroid = /Android \d.\d[^;]?\d?/i;
+    var isAndroid = /Android \d\.?\d?[^;]?\d?/i;
     var isApple = new RegExp("iP\\w+");
     var isMac = /Macintosh/i;
     var isQuark = new RegExp("Quark/\\d*.\\d*.\\d*.\\d*");
