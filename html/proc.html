@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jquery.3.5.1.js"></script>
+    <title>进程调度</title>
+</head>
+
+<body>
+    <style>
+        .view {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .txt-area {
+            width: 50vw;
+            height: 100px;
+            border: #4cbdff solid 2px;
+            border-radius: 10px;
+            font-size: 30px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+        }
+
+        button {
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            vertical-align: middle;
+            color: #fff;
+            background-color: #e9686b;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            font-family: Consolas;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            outline: 0;
+            padding: 8px 16px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.2s ease-out 0s;
+            border-radius: 2px;
+        }
+
+        .btn {
+            margin-top: 15px;
+            background-color: #00a2ff;
+            font-family: "微软雅黑", "黑体";
+
+        }
+
+        .btn:hover {
+            background-color: #4cbdff;
+        }
+
+        .btn:active {
+            background-color: #0088d6;
+        }
+
+        .grey-btn {
+            background-color: #ffffff;
+            color: #000;
+        }
+
+        .grey-btn:hover {
+            background-color: #dadada;
+        }
+
+        .grey-btn:active {
+            background-color: #7e7e7e;
+        }
+
+        .result {
+            color: #0088d6;
+        }
+
+        input[type="radio"] {
+            z-index: 100;
+        }
+
+        input[type="number"] {
+            border: #00a2ff solid 2px;
+            width: 80px;
+            height: 30px;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        h3 {
+            color: #00a2ff;
+            margin-bottom: 5px;
+        }
+
+        h1,
+        h4 {
+            color: #0088d6;
+        }
+
+        /* 底部页脚宽度适配 */
+        .foot {
+            color: #0088d6;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* @media screen and (min-width: 600px) {
+            .foot {
+                position: absolute;
+                color: #0088d6;
+                bottom: 10px;
+                left: 45vw;
+                /* margin: 0 auto; 
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .foot {
+                position: absolute;
+                bottom: 10px;
+                color: #0088d6;
+                left: 30vw;
+            }
+        } */
+
+        .largemartop {
+            margin-top: 60px;
+        }
+
+        .mediumartop {
+            margin-top: 30px;
+        }
+
+        .littartop {
+            margin-top: 5px;
+        }
+
+        .floatbar {
+            position: fixed;
+            display: none;
+            background: #fff;
+            width: 300px;
+            height: 260px;
+            left: 50%;
+            margin-left: -150px;
+            top: 10vh;
+            border-radius: 10px;
+            box-shadow: darkgrey 3px 3px 10px 1px;
+            z-index: 3;
+        }
+
+        .flex-layout {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .floatitem-title {
+            margin-right: 5px;
+            color: #00a2ff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .float-item {
+            margin-top: 10px;
+        }
+
+        .float-btn {
+            margin-top: 5px;
+        }
+
+        .table {
+            border: #00a2ff solid 2px;
+            margin: 0 auto;
+            border-spacing: 0;
+        }
+
+        .table .headline tr {
+            background: #c4e9ff;
+            border-top: #00a2ff solid 1px;
+            /* border: #00a2ff solid 1px; */
+        }
+
+        tr {
+            -o-transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -ms-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        tr:hover {
+            background: #ddf2ff;
+        }
+
+        tr td,
+        tr th {
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .select {
+            display: inline-block;
+            width: 200px;
+            position: relative;
+            vertical-align: middle;
+            padding: 0;
+            overflow: hidden;
+            background-color: #fff;
+            color: #555;
+            border: 1px solid #aaa;
+            text-shadow: none;
+            border-radius: 4px;
+            transition: box-shadow 0.25s ease;
+            z-index: 2;
+        }
+
+        .select:hover {
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .select:before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #ccc;
+            top: 14px;
+            right: 10px;
+            cursor: pointer;
+            z-index: -2;
+        }
+
+        .select select {
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            background-image: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .select select:focus {
+            outline: none;
+        }
+
+        #selector option {
+            background: #c4e9ff;
+            border: none;
+        }
+    </style>
+    <div class="view">
+        <h1>进程调度演示</h1>
+        <table class="table">
+            <thead>
+                <tr class="headline">
+                    <th>进程号</th>
+                    <th>优先级</th>
+                    <th>进程到达时间</th>
+                    <th>进程预计执行时间</th>
+                </tr>
+            </thead>
+            <tbody id="table">
+
+                <tr id="proc0">
+                    <td>0</td>
+                    <td>1</td>
+                    <td>50</td>
+                    <td>60</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="floatbar" id="floatbar">
+            <div class="flex-layout">
+                <div class="float-item">
+                    <span class="floatitem-title">进程号</span>
+                    <input type="number" id="pid-input" value="1" name="pid" />
+                </div>
+                <div class="float-item">
+                    <span class="floatitem-title">进程到达时间</span>
+                    <input type="number" id="prot-input" value="100" name="proc" />
+                </div>
+                <div class="float-item">
+                    <span class="floatitem-title">进程预计执行时间</span>
+                    <input type="number" id="pret-input" value="50" />
+                </div>
+                <div class="float-item">
+                    <span class="floatitem-title">优先级</span>
+                    <input type="number" id="weig-input" value="1" />
+                </div>
+
+                <div class="float-item">
+                    <button class="btn float-btn" id="submit-btn">提交</button>
+                    <button class="btn float-btn grey-btn" id="cancel-btn">取消</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="view">
+            <button class="btn" id="add-btn">添加进程</button>
+            <button class="btn" id="edit-btn">编辑进程</button>
+            <button class="btn" id="del-btn">删除进程</button>
+        </div>
+        <div class="view mediumartop">
+            <div class="select">
+                <select id="selector">
+                    <option value="0">先来先服务FCFS</option>
+                    <option value="1">短进程优先SPF</option>
+                    <option value="2">高响应比优先HRN</option>
+                    <option value="3">静态优先级调度SHPF</option>
+                    <option value="4">基础时间片轮转BRR(10)</option>
+                    <option value="5" class="last-op">多级反馈队列</option>
+                </select>
+            </div>
+
+            <br>
+            <button class="btn" id="start-btn">运行所有进程</button>
+            <button class="btn" onclick="location.reload()">重置</button>
+            <button class="btn" id="clear-btn">清空结果</button>
+        </div>
+        <div class="view mediumartop">
+            <table class="table">
+                <thead>
+                    <tr class="headline">
+                        <th>进程号</th>
+                        <th>优先级</th>
+                        <th>到达时间</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>运行时间</th>
+                        <th>周转时间</th>
+                        <th>带权周转时间</th>
+                    </tr>
+                </thead>
+                <tbody id="res-table"></tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- <script src="./process.js"></script> -->
+    <footer class="foot">
+        <span>copyright lnp 2020</span>
+    </footer>
+    <script>
+        var timeslice = 10;
+        //var procNum = 1;
+        var pidMap = {
+            '0': ['1', '50', '60']
+        };
+        var proNum = 1;
+
+        // 一分钟写快排
+        function quickSort(n, l, h, type) {
+            let ol = l;
+            let oh = h;
+            if (l < h) {
+                let t = n[l];
+                while (l < h) {
+                    while (l < h && n[h][type] >= t[type]) {
+                        h--;
+                    }
+                    n[l] = n[h];
+                    while (l < h && n[l][type] <= t[type]) {
+                        l++;
+                    }
+                    n[h] = n[l];
+                }
+                n[l] = t;
+                quickSort(n, ol, l - 1, type);
+                quickSort(n, l + 1, oh, type);
+            }
+        }
+        // 获取进程列表 返回<json>[]
+        function getProcArray() {
+            let array = [];
+            for (let i in pidMap) {
+                array.push({
+                    pid: parseInt(i),
+                    weight: parseInt(pidMap[i][0]),
+                    arrivtime: parseInt(pidMap[i][1]),
+                    runtime: parseInt(pidMap[i][2]),
+                    turntime: 0
+                });
+            }
+            return array;
+        }
+
+        // function addItem() {
+        //     let input = prompt('请输入进程号 到达时间和预计执行时间(空格隔开)', '1 100 50');
+        //     if (input == null) {
+        //         alert('已取消');
+        //         return;
+        //     }
+        //     let reg = /^\d*\s\d*\s\d*$/;
+        //     if (!reg.test(input)) {
+        //         alert('请检查输入');
+        //         return;
+        //     }
+        //     let res = input.split(' ');
+        //     if (pidMap.hasOwnProperty(res[0])) {
+        //         alert('重复的进程号!请检查！');
+        //         return;
+        //     }
+        //     pidMap[res[0]] = res.slice(1);
+        //     //let pid = parseInt(res[0]);
+        //     //let arravalTime = parseInt(res[1]);
+        //     //let estimateTime = parseInt(res[2]);
+        //     let trtmp = $('<tr>', {
+        //         id: 'proc' + res[0]
+        //     });
+        //     let td0 = $(`<td>${res[0]}</td>`);
+        //     let td1 = $(`<td>${res[1]}</td>`);
+        //     let td2 = $(`<td>${res[2]}</td>`);
+        //     trtmp.append(td0, td1, td2);
+        //     $('#table').append(trtmp);
+        // }
+
+        function editItem(pid) {
+            if (proNum == 0) {
+                alert('没有，改个锤子');
+                return;
+            }
+            let tmpinput = prompt('请输入要修改的进程的进程号');
+            if (tmpinput == null) {
+                alert('已取消操作');
+                return;
+            }
+            let reg = /^\d*$/;
+            console.log(tmpinput);
+            if (!reg.test(tmpinput)) {
+                alert('输入非法');
+                return;
+            }
+            if (!pidMap.hasOwnProperty(tmpinput)) {
+                alert('进程号不存在!请检查！');
+                return;
+            }
+
+            let input = prompt('请输入进程新的优先级、到达时间和预计执行时间(空格隔开)',
+                `${pidMap[tmpinput][0]} ${pidMap[tmpinput][1]} ${pidMap[tmpinput][2]}`);
+            if (input == null) {
+                alert('已取消,未进行修改');
+                return;
+            }
+            let reg2 = /^\d*\s\d*\s\d*$/;
+            if (!reg2.test(input)) {
+                alert('请检查输入');
+                return;
+            }
+            let res = input.split(' ');
+            pidMap[tmpinput] = res.slice();
+            $('#proc' + tmpinput).children()[1].textContent = res[0];
+            $('#proc' + tmpinput).children()[2].textContent = res[1];
+            $('#proc' + tmpinput).children()[3].textContent = res[2];
+        }
+
+        function delItem() {
+            if (proNum == 0) {
+                alert('没有，别删了');
+                return;
+            }
+            let tmpinput = prompt('请输入要删除的进程的进程号');
+            if (tmpinput == null) {
+                alert('已取消操作');
+                return;
+            }
+            let reg = /^\d*$/;
+            console.log(tmpinput);
+            if (!reg.test(tmpinput)) {
+                alert('输入非法');
+                return;
+            }
+            if (!pidMap.hasOwnProperty(tmpinput)) {
+                alert('进程号不存在!请检查！');
+                return;
+            }
+            $('#proc' + tmpinput).remove();
+            delete pidMap[tmpinput];
+            proNum--;
+            $('#pid-input').val(proNum);
+        }
+
+        //# pid-input的change事件处理方法
+        $('#pid-input').on('change', () => {
+            if ($('#pid-input').val() == '') {
+                $('#pid-input').val(proNum);
+            }
+        });
+
+        $('#prot-input').on('change', () => {
+            if ($('#prot-input').val() == '') {
+                $('#prot-input').val('0');
+            }
+        });
+
+        $('#pret-input').on('change', () => {
+            if ($('#pret-input').val() == '' || $('#pret-input').val() == '0') {
+                $('#pret-input').val('1');
+            }
+        });
+
+        $('#weig-input').on('change', () => {
+            if ($('#weig-input').val() == '' || $('#pret-input').val() == '0') {
+                $('#weig-input').val('1');
+            }
+        });
+
+        $('#add-btn').on('click', () => {
+            //addItem();
+            //$('#floatbar').css('display', 'block');
+            $('#floatbar').fadeIn(); //.css('display', 'block');
+            $('#add-btn').attr('disabled', 'true');
+        });
+
+        $('#submit-btn').on('click', () => {
+            //addItem();
+            let res = [$('#pid-input').val(), $('#weig-input').val(), $('#prot-input').val(), $('#pret-input')
+                .val()
+            ];
+            if (pidMap.hasOwnProperty(res[0])) {
+                alert('重复的进程号!请检查！');
+                return;
+            }
+            pidMap[res[0]] = res.slice(1);
+            //let pid = parseInt(res[0]);
+            //let arravalTime = parseInt(res[1]);
+            //let estimateTime = parseInt(res[2]);
+            let trtmp = $('<tr>', {
+                id: 'proc' + res[0]
+            });
+
+            let td0 = $(`<td>${res[0]}</td>`);
+            let td1 = $(`<td>${res[1]}</td>`);
+            let td2 = $(`<td>${res[2]}</td>`);
+            let td3 = $(`<td>${res[3]}</td>`);
+
+            trtmp.append(td0, td1, td2, td3);
+            proNum++;
+            $('#pid-input').val(proNum);
+            $('#table').append(trtmp);
+            $('#floatbar').fadeOut(); //.css('display', 'none');
+            $('#add-btn').removeAttr('disabled');
+        });
+
+        $('#cancel-btn').on('click', () => {
+            //addItem();
+            $('#floatbar').fadeOut(); //.css('display', 'none');
+            $('#add-btn').removeAttr('disabled');
+        });
+
+        $('#edit-btn').on('click', () => {
+            editItem();
+        });
+
+        $('#del-btn').on('click', () => {
+            delItem();
+        });
+
+        // 保留两位小数 js自带的保留位数返回的是string
+        function keepTwoDecimal(num) {
+            let result = parseFloat(num);
+            if (isNaN(result)) {
+                //alert('传递参数错误，请检查！');
+                return result;
+            }
+            result = Math.round(num * 100) / 100;
+            return result;
+        };
+
+        //var resNum = 0;
+
+        // 运行结果前台操作
+        function syncDataToFront(data) {
+            // for (let i = 0; i < data.length; i++) {
+            //     let trtmp = $('<tr>', {
+            //         id: 'res' + data[i].pid
+            //     });
+            //     let td0 = $(`<td>${data[i].pid}</td>`);
+            //     let td1 = $(`<td>${data[i].weight}</td>`);
+            //     let td2 = $(`<td>${data[i].arrivtime}</td>`);
+            //     let td3 = $(`<td>${data[i].sttime}</td>`);
+            //     let td4 = $(`<td>${data[i].edtime}</td>`);
+            //     let td5 = $(`<td>${data[i].runtime}</td>`);
+            //     let td6 = $(`<td>${data[i].turntime}</td>`);
+            //     let td7 = $(`<td>${data[i].weighttime}</td>`);
+            //     trtmp.append(td0, td1, td2, td3, td4, td5, td6, td7);
+            //     $('#res-table').append(trtmp);
+            // }
+
+            data.forEach(el => {
+                let trtmp = $('<tr>', {
+                    id: 'res' + el.pid
+                });
+                let td0 = $(`<td>${el.pid}</td>`);
+                let td1 = $(`<td>${el.weight}</td>`);
+                let td2 = $(`<td>${el.arrivtime}</td>`);
+                let td3 = $(`<td>${el.sttime}</td>`);
+                let td4 = $(`<td>${el.edtime}</td>`);
+                let td5 = $(`<td>${el.runtime}</td>`);
+                let td6 = $(`<td>${el.turntime}</td>`);
+                let td7 = $(`<td>${el.weighttime}</td>`);
+                trtmp.append(td0, td1, td2, td3, td4, td5, td6, td7);
+                $('#res-table').append(trtmp);
+            });
+            //resNum = data.length;
+        }
+
+        // 获取json数组某个属性的最小值
+        function getMin(array, attr) {
+            let min = 0;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i][attr] < array[min][attr]) {
+                    min = i;
+                }
+            }
+            return min;
+        }
+
+        function FCFS() {
+            let array = getProcArray();
+            quickSort(array, 0, array.length - 1, 'arrivtime');
+            let time = array[0].arrivtime;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].arrivtime > time) {
+                    time = array[i].arrivtime;
+                }
+                array[i]['sttime'] = time;
+                time += array[i].runtime;
+                array[i]['edtime'] = time;
+                array[i]['turntime'] = time - array[i].arrivtime;
+                array[i]['weighttime'] = (time - array[i].arrivtime) / array[i].runtime;
+            }
+            syncDataToFront(array);
+        }
+
+        function SPF() {
+            let array = getProcArray(); // 获取进程队列
+            let cache = []; // 等待队列
+            let index = 0; // 调入等待队列的进程索引(调入等待队列的进程个数 - 1)
+            let time = 0 // 当前时间
+            let num = 0; // 当前已调度进程个数
+            let res = []; // 结果数组
+            quickSort(array, 0, array.length - 1, 'arrivtime'); // 按照到达时间对进程数组排序
+            while (num < array.length) {
+                while (index < array.length && array[index].arrivtime <= time) { // 如果进程到达时间小于现在时间，进入等待队列
+                    cache.push(array[index]);
+                    index++;
+                }
+                if (cache.length == 0) { // 等待队列为空
+                    if (index == array.length) { // 所有元素都已经进过等待队列了，退出循环
+                        break;
+                    }
+                    time = array[index].arrivtime; //时间增加到下一个进程到的时候
+                    continue; // 跳出本轮 一定要加，否则如果还有其他进程同时到达的话就没法进入等待队列了
+                }
+                // 从等待队列调度进程
+                let min = getMin(cache, 'runtime'); // 获取等待队列里面运行时间最短的一个
+                num++;
+                cache[min]['sttime'] = time; // 开始时间
+                time += cache[min].runtime; // 模拟运行
+                cache[min]['edtime'] = time; // 结束时间
+                cache[min]['turntime'] = time - cache[min].arrivtime; // 周转时间
+                cache[min]['weighttime'] = (time - cache[min].arrivtime) / cache[min].runtime; // 带权周转时间
+                res.push(cache[min]); // 调度完成放入结果数组
+                cache.splice(min, 1); // 从等待队列移除此进程
+            }
+            syncDataToFront(res); // 显示到前台
+        }
+
+        function getHrnMax(array, currtime) {
+            let max = 0;
+            for (let i = 0; i < array.length; i++) {
+                let tmp1 = (array[i]['arrivtime'] - currtime) / array[i]['runtime'] + 1;
+                let tmp2 = (array[max]['arrivtime'] - currtime) / array[max]['runtime'] + 1;
+                if (tmp1 > tmp2) {
+                    max = i;
+                }
+            }
+            return max;
+        }
+
+        function HRN() {
+            let array = getProcArray();
+            let cache = [];
+            let index = 0;
+            let time = 0 //array[0].arrivtime;
+            let num = 0;
+            let res = [];
+            quickSort(array, 0, array.length - 1, 'arrivtime');
+            while (num < array.length) {
+                while (index < array.length && array[index].arrivtime <= time) {
+                    cache.push(array[index]);
+                    index++;
+                }
+                if (cache.length == 0) {
+                    if (index == array.length) {
+                        break;
+                    }
+                    time = array[index].arrivtime;
+                    continue;
+                }
+
+                let max = getHrnMax(cache, time);
+                num++;
+                cache[max]['sttime'] = time;
+                time += cache[max].runtime;
+                cache[max]['edtime'] = time;
+                cache[max]['turntime'] = time - cache[max].arrivtime;
+                cache[max]['weighttime'] = (time - cache[max].arrivtime) / cache[max].runtime;
+                res.push(cache[max]);
+                cache.splice(max, 1);
+            }
+            syncDataToFront(res);
+        }
+
+        function SHPF() {
+            let array = getProcArray();
+            let cache = [];
+            let index = 0;
+            let time = 0 //array[0].arrivtime;
+            let num = 0;
+            let res = [];
+            quickSort(array, 0, array.length - 1, 'arrivtime');
+            while (num < array.length) {
+                while (index < array.length && array[index].arrivtime <= time) {
+                    cache.push(array[index]);
+                    index++;
+                }
+                if (cache.length == 0) {
+                    if (index == array.length) {
+                        break;
+                    }
+                    time = array[index].arrivtime;
+                    continue;
+                }
+                let min = getMin(cache, 'weight');
+                num++;
+                cache[min]['sttime'] = time;
+                time += cache[min].runtime;
+                cache[min]['edtime'] = time;
+                cache[min]['turntime'] = time - cache[min].arrivtime;
+                cache[min]['weighttime'] = (time - cache[min].arrivtime) / cache[min].runtime;
+                res.push(cache[min]);
+                cache.splice(min, 1);
+            }
+            syncDataToFront(res);
+        }
+
+        function BRR() {
+            let readyQueue = getProcArray();
+            let time = 0;
+            quickSort(readyQueue, 0, readyQueue.length - 1, 'arrivtime');
+            let his = readyQueue.slice();
+            let array = [];
+            while (readyQueue.length != 0) {
+                if (readyQueue[0].runtime <= timeslice) {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    item['edtime'] = time + item.runtime;
+                    item.runtime = tmpitem.runtime;
+                    item['weighttime'] = item['turntime'] / item.runtime;
+                    time += timeslice;
+                    array.push(item);
+                } else {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    for (let i = 0; i < readyQueue.length; i++) {
+                        readyQueue[i]['turntime'] += timeslice;
+                    }
+                    if (item.runtime == tmpitem.runtime) {
+                        item['sttime'] = time;
+                    }
+                    item.runtime -= timeslice;
+                    time += timeslice;
+                    readyQueue.push(item);
+                    his.push(tmpitem);
+                }
+            }
+            syncDataToFront(array);
+        }
+
+        function MFBRR(readyQueue, mftimeslice, time, array, his) {
+            quickSort(readyQueue, 0, readyQueue.length - 1, 'arrivtime');
+            while (readyQueue.length != 0) {
+                if (readyQueue[0].runtime <= mftimeslice) {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    item['edtime'] = time + item.runtime;
+                    item.runtime = tmpitem.runtime;
+                    item['weighttime'] = item['turntime'] / item.runtime;
+                    time += mftimeslice;
+                    array.push(item);
+                } else {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    for (let i = 0; i < readyQueue.length; i++) {
+                        readyQueue[i]['turntime'] += mftimeslice;
+                    }
+                    if (item.runtime == tmpitem.runtime) {
+                        item['sttime'] = time;
+                    }
+                    item.runtime -= mftimeslice;
+                    time += mftimeslice;
+                    readyQueue.push(item);
+                    his.push(tmpitem);
+                }
+            }
+        }
+
+        function MF() {
+            //alert('维护多个队列，每个队列分别采用FCFS时间片轮转调度，每个队列都有一个优先级，优先级越高该队列时间片越短');
+            let readyQueue = getProcArray();
+            let time = 0;
+            quickSort(readyQueue, 0, readyQueue.length - 1, 'arrivtime');
+            let his = readyQueue.slice();
+            //let his2 = []; 
+            let array = [];
+            let queue2 = [];
+            while (readyQueue.length != 0) {
+                if (readyQueue[0].runtime <= timeslice) {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    item['edtime'] = time + item.runtime;
+                    item.runtime = tmpitem.runtime;
+                    item['weighttime'] = item['turntime'] / item.runtime;
+                    time += timeslice;
+                    array.push(item);
+                } else {
+                    let item = readyQueue.splice(0, 1)[0];
+                    let tmpitem = his.splice(0, 1)[0];
+                    for (let i = 0; i < readyQueue.length; i++) {
+                        readyQueue[i]['turntime'] += timeslice;
+                    }
+                    if (item.runtime == tmpitem.runtime) {
+                        item['sttime'] = time;
+                    }
+                    item.runtime -= timeslice;
+                    time += timeslice;
+                    //readyQueue.push(item);
+                    queue2.push(item);
+                    his.push(tmpitem);
+                }
+            }
+            MFBRR(queue2, timeslice * 2, time, array, his);
+            syncDataToFront(array);
+
+        }
+
+        $('#start-btn').on('click', () => {
+            if (proNum == 0) {
+                alert('啥都没有运行不了的');
+                return;
+            }
+            switch ($('#selector').val()) {
+                case '0':
+                    FCFS();
+                    break;
+                case '1':
+                    SPF();
+                    break;
+                case '2':
+                    HRN();
+                    break;
+                case '3':
+                    SHPF();
+                    break;
+                case '4':
+                    BRR();
+                    break;
+                case '5':
+                    MF();
+                    break;
+            }
+        });
+
+        $('#clear-btn').on('click', () => {
+            // if(resNum == 0) {
+            //     alert('没有，别删了');
+            //     return;
+            // }
+            //for (let i = 0; i < resNum; i++) {
+            if ($('#res-table').text() == '') {
+                alert('没有，别删了');
+                return;
+            }
+            $('#res-table').text('');
+            //}
+        });
+    </script>
+
+</body>
+
+</html>

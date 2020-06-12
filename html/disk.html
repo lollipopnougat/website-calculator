@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磁盘调度示例</title>
+    <script src="./jquery.3.5.1.js"></script>
+</head>
+
+<body>
+    <style>
+        .view {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .txt-area {
+            width: 50vw;
+            height: 100px;
+            border: #4cbdff solid 2px;
+            border-radius: 10px;
+            font-size: 30px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+        }
+
+        button {
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            vertical-align: middle;
+            color: #fff;
+            background-color: #e9686b;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            font-family: Consolas;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            outline: 0;
+            padding: 8px 16px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.2s ease-out 0s;
+            border-radius: 2px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            background-color: #00a2ff;
+            font-family: "微软雅黑", "黑体";
+
+        }
+
+        .btn:hover {
+            background-color: #4cbdff;
+        }
+
+        .btn:active {
+            background-color: #0088d6;
+        }
+
+        .result {
+            color: #0088d6;
+        }
+
+        input[type="radio"] {
+            z-index: 100;
+        }
+
+        input[type="number"] {
+            border: #00a2ff solid 2px;
+            width: 100px;
+            height: 50px;
+            font-size: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        h3 {
+            color: #00a2ff;
+            margin-bottom: 5px;
+        }
+
+        h1,
+        h4 {
+            color: #0088d6;
+        }
+
+        @media screen and (min-width: 600px) {
+            .foot {
+                position: absolute;
+                color: #0088d6;
+                bottom: 10px;
+                left: 45%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .foot {
+                position: absolute;
+                bottom: 10px;
+                color: #0088d6;
+                left: 15%;
+            }
+        }
+
+        .largemartop {
+            margin-top: 60px;
+        }
+
+        .mediumartop {
+            margin-top: 30px;
+        }
+
+        .axle {
+            display: block;
+            width: 60%;
+            height: 4px;
+            background: #00a2ff;
+            margin: 0 auto;
+        }
+
+        .axle-bar {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: #00a2ff;
+            border-radius: 50px;
+            border: #0088d6 solid 2px;
+            position: relative;
+            top: -25px;
+            left: 11vw;
+        }
+
+        .axle-text {
+            color: #ffffff;
+            text-align: center;
+            font-size: 2vw;
+            position: relative;
+            top: 1.2vw;
+        }
+    </style>
+    <div class="view">
+        <h1>磁盘调度演示</h1>
+        <h4>磁道范围为[0, 200]</h4>
+        <h3>起始磁道位置</h3>
+        <input type="number" id="input-location" value="50" />
+        <h3>要访问的磁道号</h3>
+        <textarea class="txt-area" id="input-area" placeholder="请输入磁道，以空格隔开">18 5 23 8 16 5</textarea>
+    </div>
+    <div class="view">
+        <input type="radio" id="ra1" value="fcfs" name="select" checked />
+        <span>先来先服务(FCFS)</span>
+        <input type="radio" id="ra2" name="select" value="sp" />
+        <span>最短寻道时间优先(SSTF)</span><br>
+        <input type="radio" id="ra3" name="select" value="sc" />
+        <span>扫描算法(SCAN)</span>
+        <input type="radio" id="ra4" name="select" value="cs" />
+        <span>循环扫描算法(CSCAN)</span><br>
+        <input type="radio" id="ra5" name="select" value="ns" />
+        <span>N步扫描算法(N-SCAN)</span>
+        <input type="radio" id="ra6" name="select" value="fs" />
+        <span>简化N步扫描算法(FSCAN)</span>
+
+        <br>
+        <button class="btn" id="btn">执行</button>
+        <button class="btn" onclick="location.reload()">重置</button>
+    </div>
+    <div class="view largemartop">
+        <div class="axle">
+            <div class="axle-bar" id="axle-bar">
+                <!-- <span class="axle-text" id="axle-text">50</span> -->
+            </div>
+        </div>
+    </div>
+    <div class="view mediumartop">
+        <h3 class="result" id="result">结果</h3>
+    </div>
+    <footer class="foot">
+        <span>copyright lnp 2020</span>
+    </footer>
+    <script>
+        var array = [];
+        let reg = /(\d+\s)+\d+/;
+        var start = 0;
+        var sum = 0;
+        var axleBarLeft = 50;
+
+        function MoveBar(pos, dur, que) {
+            axleBarLeft = pos;
+            //$('#axle-text').text(axleBarLeft);
+            $('#axle-bar').animate({
+                left: axleBarLeft * 0.3 - 4 + 'vw'
+            }, {
+                duration: dur,
+                queue: que
+            });
+
+            // $('#axle-text').animate({}, {
+            //     duration: 500,
+            //     queue: que
+            // });
+            //$('#axle-text').delay(delayTime).text(axleBarLeft);
+            // if (que) {
+            //     $('#axle-text').queue(() => {
+            //         $('#axle-text').delay(500).text(axleBarLeft);
+            //         $('#axle-text').dequeue();
+            //     });
+            // }
+
+        }
+        $('#input-location').on('change', () => {
+            if ($('#input-location').val() == '') {
+                $('#input-location').val('0');
+            }
+            start = parseInt($('#input-location').val());
+
+            if (start > 200) {
+                alert('超过了最大范围');
+                start = 200;
+                $('#input-location').val(start);
+            } else if (start < 0) {
+                alert('不可以小于0');
+                start = 0;
+                $('#input-location').val(start);
+            }
+
+            if (start != axleBarLeft) {
+                MoveBar(start, 0, false);
+            }
+        });
+
+
+        // 准备数据
+        function Prepare() {
+            sum = 0;
+            array.length = 0;
+            //start = parseInt($('#input-location').val());
+            //if (start != axleBarLeft) {
+            //MoveBar(start, 0, false);
+            //}
+
+            let input = $('#input-area').val();
+            if (!reg.test(input)) {
+                alert('输入部分含有非法字符');
+            }
+            let tmparray = input.split(' ');
+            tmparray.forEach(el => {
+                if (el > 200 || el < 0) {
+                    throw new Error('输入部分位置超出限制');
+                }
+                array.push(parseInt(el));
+            });
+        }
+
+        function ShowResult() {
+            console.log(sum);
+            $("#result").text('总共移动道数: ' + sum + ' \n 平均寻道长度: ' + sum / array.length);
+        }
+
+        // 一分钟快排
+        function QuickSort(n, l, h) {
+            let ol = l;
+            let oh = h;
+            if (l < h) {
+                let t = n[l];
+                while (l < h) {
+                    while (l < h && n[h] >= t) {
+                        h--;
+                    }
+                    n[l] = n[h];
+                    while (l < h && n[l] <= t) {
+                        l++;
+                    }
+                    n[h] = n[l];
+                }
+                n[l] = t;
+                QuickSort(n, ol, l - 1);
+                QuickSort(n, l + 1, oh);
+            }
+        }
+
+        function FCFS() {
+            let j = start;
+
+            array.forEach(el => {
+                MoveBar(el, 500, true);
+                sum += Math.abs(j - el);
+                j = el;
+            });
+            ShowResult();
+        }
+
+        function SSTF() {
+            let tmparray = array.slice();
+            QuickSort(tmparray, 0, tmparray.length - 1);
+            let index = -1;
+            for (let i = 0; i < tmparray.length; i++) {
+                if (start > tmparray[i]) {
+                    index = i;
+                }
+            }
+            if (index == tmparray.length - 1) {
+                let last = start;
+                for (let i = tmparray.length - 1; i >= 0; i--) {
+                    MoveBar(tmparray[i], 500, true);
+                    sum += last - tmparray[i];
+                    last = tmparray[i];
+                }
+
+
+            } else if (index == -1) {
+                let last = start;
+                for (let i = 0; i < tmparray.length; i++) {
+                    MoveBar(tmparray[i], 500, true);
+                    sum += tmparray[i] - last;
+                    last = tmparray[i];
+                }
+            } else {
+                let left = index - 1;
+                let right = index + 1;
+                let last = start;
+                while (left >= -1 || right <= tmparray.length) {
+                    MoveBar(tmparray[index], 500, true);
+                    sum += Math.abs(last - tmparray[index]);
+                    last = tmparray[index];
+                    if (left > -1 && right < tmparray.length) {
+                        if (2 * tmparray[index] - tmparray[left] - tmparray[right] < 0) {
+                            index = left;
+                            left--;
+
+                        } else {
+                            index = right;
+                            right++;
+
+                        }
+                    } else if (left == -1) {
+                        while (right != tmparray.length) {
+                            MoveBar(tmparray[right], 500, true);
+                            sum += Math.abs(last - tmparray[right]);
+                            last = tmparray[right]
+                            right++;
+                        }
+                        break;
+
+                    } else if (right == tmparray.length) {
+                        while (left != -1) {
+                            MoveBar(tmparray[left], 500, true);
+                            sum += Math.abs(last - tmparray[left]);
+                            last = tmparray[left]
+                            left--;
+                        }
+                        break;
+                    }
+                }
+            }
+            ShowResult();
+        }
+
+        function SCAN() {
+            let tmparray = array.slice();
+            let index = 0;
+            let last = start;
+            QuickSort(tmparray, 0, tmparray.length - 1);
+            for (let i = 0; i < tmparray.length; i++) {
+                if (start > tmparray[i]) {
+                    index = i + 1;
+                } else if (start == tmparray[i]) {
+                    index = i;
+                }
+            }
+            for (let i = index; i < tmparray.length; i++) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            for (let i = index - 1; i >= 0; i--) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            ShowResult();
+        }
+
+
+
+        function CSCAN() {
+            let tmparray = array.slice();
+            let index = 0;
+            let last = start;
+            QuickSort(tmparray, 0, tmparray.length - 1);
+            for (let i = 0; i < tmparray.length; i++) {
+                if (start > tmparray[i]) {
+                    index = i + 1;
+                } else if (start == tmparray[i]) {
+                    index = i;
+                }
+            }
+            for (let i = index; i < tmparray.length; i++) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            for (let i = 0; i < index; i++) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            ShowResult();
+        }
+
+        function NSCANPart(last, st, ed) {
+            let tmparray = array.slice();
+            let index = 0;
+            QuickSort(tmparray, st, ed - 1);
+            for (let i = st; i < ed; i++) {
+                if (last > tmparray[i]) {
+                    index = i + 1;
+                }
+                else if(start == tmparray[i]) {
+                    index = i;
+                }
+            }
+            for (let i = index; i < ed; i++) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            for (let i = index - 1; i >= st; i--) {
+                MoveBar(tmparray[i], 500, true);
+                sum += Math.abs(last - tmparray[i]);
+                last = tmparray[i];
+            }
+            return last;
+
+        }
+
+        function NSCAN(N) {
+            let tmparray = array.slice();
+            let index = 0;
+            //let num = parseInt(tmparray.length / N + 0.5);
+            let last = start;
+            while (index != tmparray.length) {
+                if (index + N <= tmparray.length) {
+                    last = NSCANPart(last, index, index + N);
+                    index += N;
+                } else {
+                    last = NSCANPart(last, index, tmparray.length);
+                    index = tmparray.length;
+                }
+            }
+            ShowResult();
+        }
+
+        function FSCAN() {
+            alert(
+                '事实上，此算法就是使用两个队列存储，新来的请求放入当前不在执行的队列，本身就是对两个队列分别执行SCAN算法，演示时无非就是再执行一次SCAN算法'
+            );
+            SCAN();
+        }
+
+        $('#btn').click(() => {
+            try {
+                Prepare();
+                let selectedType = undefined;
+                let radiolist = $('input[name="select"]');
+                for (let i = 0; i < radiolist.length; i++) {
+                    let tmp = radiolist[i];
+                    if (tmp.checked) {
+                        selectedType = tmp.value;
+                        break;
+                    }
+                }
+
+                switch (selectedType) {
+                    case 'fcfs':
+                        FCFS();
+                        break;
+                    case 'sp':
+                        SSTF();
+                        break;
+                    case 'sc':
+                        SCAN();
+                        break;
+                    case 'cs':
+                        CSCAN();
+                        break;
+                    case 'ns':
+                        NSCAN(4);
+                        break;
+                    case 'fs':
+                        FSCAN();
+                        break;
+                }
+            } catch (er) {
+                alert(er);
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script> -->
+    <title>原生js模拟数据双向绑定demo</title>
+</head>
+
+<body>
+    <p id="tag-p">我是一段文本</p>
+    <input value="" placeholder="请输入什么东西" id="input" />
+    <script>
+        var obj = {};
+        document.getElementById('input').onchange = () => {
+            obj.input = document.getElementById('input').value;
+        }
+
+        Object.defineProperty(obj, 'text', {
+            set: (value) => {
+                console.log('为obj text属性赋值', value);
+                text = value;
+                document.getElementById('tag-p').innerText = value;
+            },
+            get: () => {
+                return text;
+            }
+        });
+
+        Object.defineProperty(obj, 'input', {
+            set: (value) => {
+                console.log('为obj input属性赋值', value);
+                input = value;
+                if (document.getElementById('input').value != value) {
+                    document.getElementById('input').value = value;
+                }
+
+            },
+            get: () => {
+                return input;
+            }
+        });
+    </script>
+</body>
+
+</html>

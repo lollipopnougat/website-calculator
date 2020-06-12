@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <style>
+        .lt-block {
+            display: block;
+            height: 3em;
+            width: 3em;
+            background: #aaaaaa;
+            cursor: pointer;
+            border: none;
+            font-size: 3em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .brdtop {
+            border-top: #555555 solid 2px;
+        }
+
+        .brdbtm {
+            border-bottom: #555555 solid 2px;
+        }
+
+        .brdlft {
+            border-left: #555555 solid 2px;
+        }
+
+        .brdrit {
+            border-right: #555555 solid 2px;
+        }
+
+        .main-area {
+            text-align: center;
+            margin: 0 auto;
+        }
+    </style>
+    <div>
+        <table class="main-area">
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="lt-block" id="no1">
+    </div>
+    </td>
+    <td>
+        <button class="lt-block" id="no2"></div>
+    </td>
+    <td>
+        <button class="lt-block" id="no3"></div>
+    </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="lt-block" id="no4"></div>
+        </td>
+        <td>
+            <button class="lt-block" id="no5"></div>
+        </td>
+        <td>
+            <button class="lt-block" id="no6"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="lt-block" id="no7"></div>
+        </td>
+        <td>
+            <button class="lt-block" id="no8"></div>
+        </td>
+        <td>
+            <button class="lt-block" id="no9"></div>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <script>
+        var array = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ];
+        var turn = false;
+
+        function is_over(who) {
+            let flag = false;
+            let line1 = array[0][0] == who && array[0][1] == who && array[0][2] == who;
+            let line2 = array[1][0] == who && array[1][1] == who && array[1][2] == who;
+            let line3 = array[2][0] == who && array[2][1] == who && array[2][2] == who;
+            let row1 = array[0][0] == who && array[1][0] == who && array[2][0] == who;
+            let row2 = array[0][1] == who && array[1][1] == who && array[2][1] == who;
+            let row3 = array[0][2] == who && array[1][2] == who && array[2][2] == who;
+            let s1 = array[0][0] == who && array[1][1] == who && array[2][2] == who;
+            let s2 = array[2][0] == who && array[1][1] == who && array[2][0] == who;
+            return line1 || line2 || line3 || row1 || row2 || row3 || s1 || s2;
+        }
+
+        function tap_one_item(id, char) {
+            let type = 2;
+            if (is_over(1)) {
+                alert("玩家1赢了！");
+                return;
+            }
+            else if (is_over(2)) {
+                alert("玩家2赢了！");
+                return;
+            }
+            if (turn) {
+                char = "O";
+                turn = false;
+                type = 2;
+            } else {
+                turn = true;
+                type = 1;
+            }
+            document.getElementById(id).innerHTML = char;
+            let index = parseInt(id[id.length - 1]) - 1;
+            array[parseInt(index / 3)][index % 3] = type;
+        }
+
+
+        for (let i = 1; i < 10; i++) {
+            document.getElementById("no" + i).onclick = () => {
+                tap_one_item("no" + i, "X");
+            }
+        }
+    </script>
+</body>
+
+</html>

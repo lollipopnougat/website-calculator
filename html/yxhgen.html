@@ -27,19 +27,25 @@
             margin-left: 5px;
             color: #00bfff;
             width: 300px;
+            cursor: pointer;
             transition: all 0.2s ease-out 0s;
         }
+
         .input-box:focus {
             border-bottom: solid 2px #00bb73;
             color: #00bb73;
         }
+
         input.input-box::-webkit-input-placeholder {
             color: #00bfff;
             font-size: 15px;
         }
+
         .input-area {
-            margin-top: 5px;;
+            margin-top: 5px;
+            ;
         }
+
         .output {
             border: solid 2px #00bfff;
             width: 350px;
@@ -47,10 +53,12 @@
             outline: none;
             font-size: 16px;
         }
+
         textarea.output::-webkit-input-placeholder {
             color: #00bfff;
             font-size: 14px;
         }
+
         .button {
             margin-top: 10px;
             margin-bottom: 10px;
@@ -61,9 +69,11 @@
             border-radius: 5px;
             transition: all 0.2s ease-out 0s;
         }
+
         .button:hover {
             background: #009fd4;
         }
+
         .button:active {
             background: #006283;
         }
@@ -71,15 +81,15 @@
     <h1 class="headline">营销号生成器</h1>
     <div class="input-area">
         <span>主体</span>
-        <input type="text" name="main" class="input-box" value="" placeholder="请输入主题" id="main-input"/><br>
+        <input type="text" name="main" class="input-box" value="" placeholder="请输入主题" id="main-input" /><br>
     </div>
     <div class="input-area">
         <span>行为</span>
-        <input type="text" name="behavior" class="input-box" value="" placeholder="请输入行为" id="behavior-input"/><br>
+        <input type="text" name="behavior" class="input-box" value="" placeholder="请输入行为" id="behavior-input" /><br>
     </div>
     <div class="input-area">
         <span>实际</span>
-        <input type="text" name="truth" class="input-box" value="" placeholder="请输入实际解释" id="truth-input"/>
+        <input type="text" name="truth" class="input-box" value="" placeholder="请输入实际解释" id="truth-input" />
     </div>
     <div class="input-area">
         <button id="submit-btn" class="button">↓生成营销文章↓</button>
@@ -92,9 +102,9 @@
             let str1 = document.getElementById('main-input').value;
             let str2 = document.getElementById('behavior-input').value;
             let str3 = document.getElementById('truth-input').value;
-            let result = str2+'是怎么回事呢？'+str1+'相信大家都很熟悉，但是'+str1+str2+'是怎么回事呢？\n下面就让小编带大家一起了解一下吧。\n'
-            result+= str1+str2+'，其实就是'+str3+'，大家可能会很惊讶为什么'+str1+str2+'?但事实就是这样，小编也感到非常惊讶。\n'
-            result += '这就是关于'+str2+'的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！'
+            let result = str2 + '是怎么回事呢？' + str1 + '相信大家都很熟悉，但是' + str1 + str2 + '是怎么回事呢？\n下面就让小编带大家一起了解一下吧。\n'
+            result += str1 + str2 + '，其实就是' + str3 + '，大家可能会很惊讶为什么' + str1 + str2 + '?但事实就是这样，小编也感到非常惊讶。\n'
+            result += '这就是关于' + str2 + '的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！'
             document.getElementById('output-area').value = result;
         }
     </script>
