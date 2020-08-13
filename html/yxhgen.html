@@ -11,71 +11,116 @@
     <style type="text/css">
         body {
             text-align: center;
+            background-color: #282c34;
         }
 
         .headline {
-            color: #00bfff;
+            color: #61afef;
         }
 
         .input-box {
             border-top: none;
             border-left: none;
             border-right: none;
-            border-bottom: solid 2px #00bfff;
+            border-bottom: solid 2px #3b424d;
             font-size: 18px;
             outline: none;
+            background-color: transparent;
             margin-left: 5px;
-            color: #00bfff;
+            color: #61afef;
             width: 300px;
-            cursor: pointer;
             transition: all 0.2s ease-out 0s;
         }
 
+        .input-box:hover {
+            border-bottom: solid 2px #61afef;
+        }
+
         .input-box:focus {
-            border-bottom: solid 2px #00bb73;
-            color: #00bb73;
+            border-bottom: solid 2px #a7d7ff;
+            color: #a7d7ff;
         }
 
         input.input-box::-webkit-input-placeholder {
-            color: #00bfff;
+            color: #3b424d;
             font-size: 15px;
         }
 
         .input-area {
             margin-top: 5px;
-            ;
+
+        }
+
+        .input-area span {
+            color: #61afef;
         }
 
         .output {
-            border: solid 2px #00bfff;
-            width: 350px;
+            border: solid 2px #61afef;
+            width: 340px;
             height: 400px;
             outline: none;
             font-size: 16px;
+            border-radius: 5px;
+            background-color: transparent;
+            padding: 5px;
+            color: #61afef;
+            resize: none;
         }
 
         textarea.output::-webkit-input-placeholder {
-            color: #00bfff;
+            color: #3b424d;
+            padding-left: 5px;
             font-size: 14px;
         }
 
         .button {
             margin-top: 10px;
             margin-bottom: 10px;
-            background: #00bfff;
-            color: #ffffff;
+            background: transparent;
+            color: #61afef;
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
+            border: #61afef solid 1px;
             transition: all 0.2s ease-out 0s;
+            outline: none;
         }
 
         .button:hover {
-            background: #009fd4;
+            border-color: #a7d7ff;
+            cursor: pointer;
         }
 
         .button:active {
-            background: #006283;
+            background: #61afef;
+            color: #ffffff;
+        }
+
+        footer span {
+            color: #5a6374;
+        }
+
+        .pd {
+            color: #3b424d;
+        }
+
+        a.link {
+            color: #5a6374;
+            text-decoration: none;
+            transition: all 0.2s ease-out 0s;
+        }
+
+        a.link:hover {
+            color: #61afef!important;
+        }
+
+        a.link:visited {
+            color: #5a6374;
+        }
+
+        a.link:active {
+            color: #a7d7ff!important;
         }
     </style>
     <h1 class="headline">营销号生成器</h1>
@@ -97,6 +142,11 @@
     <div class="input-area">
         <textarea type="text" name="truth" class="output" value="" placeholder="输出结果" id="output-area"></textarea>
     </div>
+    <footer>
+        <span class="pd">Pure Design</span>
+        <br>
+        <span >2020 <a href="https://www.lollipopnougat.top" class="link">lollipopnougat</a></span>
+    </footer>
     <script>
         document.getElementById('submit-btn').onclick = () => {
             let str1 = document.getElementById('main-input').value;
