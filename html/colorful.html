@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夺目</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: #282c34;
+            text-align: center;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 100% 50%;
+            }
+
+            50% {
+                background-position: 300% 50%;
+            }
+
+            100% {
+                background-position: 500% 50%;
+            }
+        }
+
+        @keyframes gradient-shift2 {
+            0% {
+                background-position: 500% 50%;
+            }
+
+            50% {
+                background-position: 300% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .headline {
+            margin-top: 300px;
+            font-size: 72pt;
+            background: linear-gradient(264.51deg, #ffe580 4.38%, #ff7571 11.51%, #ff7270 25.06%, #ea5dad 36.04%, #c2a0fd 47.63%, #9867f0 59.03%, #3bf0e4 69.96%, #33ce43 83.74%, #b2f4b6 95.62%, #dff4b2 95.62%, #ffe580 4.38%);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-position: 50% 50%;
+            background-size: 500%;
+            background-clip: text;
+            -webkit-animation: gradient-shift 20s cubic-bezier(0, 0, 1, 1) infinite;
+            animation: gradient-shift 20s cubic-bezier(0, 0, 1, 1) infinite;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            transition: all ease-in-out 0.2s;
+        }
+
+        .headline2 {
+            -webkit-animation: gradient-shift2 20s cubic-bezier(0, 0, 1, 1) infinite;
+            animation: gradient-shift2 20s cubic-bezier(0, 0, 1, 1) infinite;
+        }
+
+        .btn {
+            border-color: linear-gradient(264.51deg, #ffe580 4.38%, #ff7571 11.51%, #ff7270 25.06%, #ea5dad 36.04%, #c2a0fd 47.63%, #9867f0 59.03%, #3bf0e4 69.96%, #33ce43 83.74%, #b2f4b6 95.62%, #dff4b2 95.62%, #ffe580 4.38%);
+        }
+
+        .btn:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            z-index: -3;
+            background: transparent;
+            background: linear-gradient(264.51deg, #FFE580 4.38%, #FF7571 11.51%, #FF7270 25.06%, #EA5DAD 36.04%, #C2A0FD 47.63%, #9867F0 59.03%, #3BF0E4 69.96%, #33CE43 83.74%, #B2F4B6 95.62%);
+            background-position: 58% 50%;
+            background-size: 500%;
+            animation: gradient-shift 30s ease infinite;
+        }
+
+
+        .button {
+            font-family: "alliance", mono, sans-serif;
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 4px 20px;
+            height: 40px;
+            border-radius: 2px;
+            overflow: hidden;
+            background: transparent;
+            color: #fff;
+            transition: background .4s ease-in-out, border-color .4s ease-in-out, color .4s ease-in-out;
+        }
+
+        .button:hover {
+            color: #282c34;
+        }
+
+        a:hover,
+        .a:hover {
+            cursor: pointer;
+        }
+
+        .button:hover:before {
+            background: transparent;
+        }
+
+        .button:before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: calc(100% - 4px);
+            height: calc(100% - 3.5px);
+            top: 2px;
+            left: 2px;
+            background: #282c34;
+            z-index: -1;
+            transform: translate3d(0, 0, 0);
+            transition: background .4s ease-in-out;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        .button:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            z-index: -3;
+            background: transparent;
+            background: linear-gradient(264.51deg, #FFE580 4.38%, #FF7571 11.51%, #FF7270 25.06%, #EA5DAD 36.04%, #C2A0FD 47.63%, #9867F0 59.03%, #3BF0E4 69.96%, #33CE43 83.74%, #B2F4B6 95.62%);
+            background-position: 58% 50%;
+            background-size: 500%;
+            animation: gradient-shift 30s cubic-bezier(0, 0, 1, 1) infinite;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+    </style>
+    <h1 class="headline" id="head1">哈哈哈</h1>
+    <h1 class="headline">真不错</h1>
+    <h1 class="headline headline2">绝了</h1>
+    <script>
+        
+        let setText = (str) => {
+            if (!str) {
+                str = "默认文本";
+            }
+            let node = document.getElementById('head1');
+            node.innerText = str;
+        };
+
+    </script>
+    <a class="button" href="javascript:void(0);" onclick="setText(prompt('设置文本', '默认文本'))">
+        <span>设置</span>
+    </a>
+
+</body>
+
+</html>
