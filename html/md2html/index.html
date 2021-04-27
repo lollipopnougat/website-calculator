@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <link rel="stylesheet" href="./styles/atom-one-dark.css">
+    <script>
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.bootcss.com/mathjax/3.0.5/es5/tex-mml-chtml.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .view {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            height: 300px;
+            width: 400px;
+            opacity: 0.1;
+        }
+
+        .view:focus,
+        .view:hover {
+            opacity: 1;
+        }
+
+        .txt {
+            width: 100%;
+            height: 85%;
+            font-size: 12pt;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .screen {
+            display: block;
+            width: 90vw;
+            height: 100vh;
+            padding: 10px;
+        }
+    </style>
+    <div class="view">
+        <textarea value="" id="md" class="txt"></textarea><br>
+        <button id="btn">submit</button>
+    </div>
+
+
+    <div class="screen" id="divbox">
+        <p>右下输入markdown</p>
+    </div>
+    <script>
+        let texta = document.getElementById('md');
+        let box = document.getElementById('divbox');
+        let con = new showdown.Converter();
+        document.getElementById('btn').onclick = () => {
+            box.innerHTML = con.makeHtml(texta.value);
+            hljs.highlightAll();
+            // MathJax = {
+            //     tex: {
+            //         inlineMath: [
+            //             ['$$', '$$'],
+            //             ['\\(', '\\)']
+
+            //         ]
+            //     }
+            // };
+            MathJax.typeset();
+        }
+    </script>
+
+</body>
+
+</html>
