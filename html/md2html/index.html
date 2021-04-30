@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
     <link rel="stylesheet" href="./styles/atom-one-dark.css">
-    <script>
-
-    </script>
+    <link rel="icon" type="image/x-icon" size="64x64"
+        href="https://cdn.jsdelivr.net/gh/lollipopnougat/picbed/lnplogor.ico" />
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.bootcss.com/mathjax/3.0.5/es5/tex-mml-chtml.js"></script>
-    <title>Document</title>
+    <title>md2ml</title>
 </head>
 
 <body>
@@ -24,24 +23,41 @@
         .view {
             display: block;
             position: fixed;
-            bottom: 0;
             right: 0;
+            bottom: 0;
             height: 300px;
-            width: 400px;
-            opacity: 0.1;
+            width: 300px;
+            opacity: 0.4;
         }
 
-        .view:focus,
         .view:hover {
             opacity: 1;
         }
 
+        textarea {
+            border: #0094ff solid 2px;
+        }
+
+        textarea:focus {
+            outline: 0;
+        }
+
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background: #0094ff;
+        }
+
+
         .txt {
             width: 100%;
             height: 85%;
-            font-size: 12pt;
             margin-left: auto;
             margin-right: auto;
+            font-size: 12pt;
         }
 
         .screen {
@@ -61,11 +77,27 @@
         <p>右下输入markdown</p>
     </div>
     <script>
-        let texta = document.getElementById('md');
-        let box = document.getElementById('divbox');
-        let con = new showdown.Converter();
-        document.getElementById('btn').onclick = () => {
-            box.innerHTML = con.makeHtml(texta.value);
+        window.MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+            }
+        };
+
+        let texta = document.querySelector('#md');
+        let box = document.querySelector('#divbox');
+        let con = new showdown.Converter({
+            'backslashEscapesHTMLTags': true // 开启转义html tag选项
+        });
+        document.querySelector('#btn').onclick = () => {
+            let txt = texta.value;
+            console.log(txt);
+            txt = txt.replace(/(\w)_([\w|{])/g, '$1\\_$2');
+            txt = txt.replace(/(<\/?script>)/g, '\\$1'); // 需要backslashEscapesHTMLTags
+            console.log(txt);
+            box.innerHTML = con.makeHtml(txt);
             hljs.highlightAll();
             // MathJax = {
             //     tex: {
