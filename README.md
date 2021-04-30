@@ -13,13 +13,91 @@
 
 [2048.html](https://www.lollipopnougat.top/website-calculator/html/2048neo.html)
 
-### 原反补码转换器（负的浮点数有问题）
+### 原反补码转换器(更新了mdui主题)
 
 [convert.html](https://www.lollipopnougat.top/website-calculator/html/convert.html)
 
 ### b站BVAV地址转换器
 
 [BAConvert.html](https://www.lollipopnougat.top/website-calculator/html/BAConvert.html)
+
+### 生日贺卡
+
+[生日贺卡](https://www.lollipopnougat.top/website-calculator/html/Birthday/index.html)
+
+### 动态背景系列
+
+#### 色彩海洋
+
+##### 掉帧警告
+
+[colorsea](https://www.lollipopnougat.top/website-calculator/html/colorsea/index.html)
+
+#### 粒子波系列
+
+##### 粒子波(一元函数)
+
+[particle-wave](https://www.lollipopnougat.top/website-calculator/html/particle-wave/index.html)
+
+##### 粒子海洋(二元函数)
+
+[3dparsea](https://www.lollipopnougat.top/website-calculator/html/3dparsea.html)
+
+#### 梅花盛开
+
+[plum-bloom](https://www.lollipopnougat.top/website-calculator/html/plum-bloom/index.html)
+
+#### 流星
+
+[Shooting-Stars](https://www.lollipopnougat.top/website-calculator/html/Shooting-Stars/index.html)
+
+#### 文本动画
+
+[text-animation](https://www.lollipopnougat.top/website-calculator/html/text-animation/index.html)
+
+#### 黑客风数字雨
+
+##### 彩色版
+
+[stringrain.html](https://www.lollipopnougat.top/website-calculator/html/stringrain.html)
+
+##### 符号版
+
+[NumRain.html](https://www.lollipopnougat.top/website-calculator/html/NumRain.html)
+
+#### 穿越星空
+
+[stars.html](https://www.lollipopnougat.top/website-calculator/html/stars.html)
+
+### 3D 模型示例
+
+[3Dforest.html](https://www.lollipopnougat.top/website-calculator/html/3Dforest.html)
+
+### ~~买了个大表~~数字时钟
+
+[clock.html](https://www.lollipopnougat.top/website-calculator/html/clock.html)
+
+### 操作系统演示(哈？这是什么奇怪的项目)
+
+#### 进程调度演示
+
+[proc.html](https://www.lollipopnougat.top/website-calculator/html/proc.html)
+
+#### 磁盘调度演示
+
+[disk.html](https://www.lollipopnougat.top/website-calculator/html/disk.html)
+
+### identicon (生成类似github默认头像的玩意)
+
+#### 无样式警告(瞎眼警告)
+
+[identicon](https://www.lollipopnougat.top/website-calculator/html/identicon.html)
+
+### markdown页面渲染
+
+#### 支持latex公式
+
+[md2html](https://www.lollipopnougat.top/website-calculator/html/md2html/index.html)
 
 ### HTML教程1（弃坑了）
 
@@ -29,9 +107,7 @@
 
 [PowerShellTips3.html](https://www.lollipopnougat.top/website-calculator/html/PowerShellTips3.html)
 
-
 另外两篇在我的[博客](https://www.lollipopnougat.top)上
-
 
 这可能是我写的最长的东西了，参考了很多网络资料（[pstips.net](https://www.pstips.net/)）
 
@@ -42,10 +118,6 @@
 ### 俄罗斯方块（仅电脑版适用，来源网络）
 
 [Rublock2](https://www.lollipopnougat.top/website-calculator/html/Rublock2.html)
-
-### 黑客风数字雨新版（来源网络）
-
-[stringrain.html](https://www.lollipopnougat.top/website-calculator/html/stringrain.html)
 
 ### 浏览器检测（js正则实现，读取UA，有bug的话请反馈）
 
