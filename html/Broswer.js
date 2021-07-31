@@ -45,7 +45,7 @@ function getexp() {
     num++;
     var str;
     var ua = navigator.userAgent;
-    var isEdge = new RegExp("Edge");
+    var isEdge = new RegExp("Edge?");
     var isQQ = new RegExp("QQBrowser");
     var isMQQ = new RegExp("MQQBrowser/\\d*.\\d*");
     var isUC = new RegExp("UBrowser");
@@ -57,7 +57,7 @@ function getexp() {
     var ChromeVersion = new RegExp("Chrome/[\\d*.]* ");
     var CriVersion = new RegExp("CriOS/[\\d*.]* ");
     var SafariVersion = new RegExp("Safari/\\d*.\\d*");
-    var EdgeVersion = new RegExp("Edge/\\d*.\\d*");
+    var EdgeVersion = new RegExp("Edge?/\\d*.\\d*");
     var includeSafari = /Safari/;
     var isWin = /Windows NT \d+.\d*/i;
     var isAndroid = /Android \d\.?\d?[^;]?\d?/i;

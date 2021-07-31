@@ -13,8 +13,8 @@
     <input value="" placeholder="请输入什么东西" id="input" />
     <script>
         var obj = {};
-        document.getElementById('input').onchange = () => {
-            obj.input = document.getElementById('input').value;
+        document.getElementById('input').oninput = () => {
+            obj.text = document.getElementById('input').value;
         }
 
         Object.defineProperty(obj, 'text', {
