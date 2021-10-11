@@ -69,6 +69,14 @@
 
 [stars.html](https://www.lollipopnougat.top/website-calculator/html/stars.html)
 
+#### NeonLove WebGL版
+
+[NeonLoveGL.html](https://www.lollipopnougat.top/website-calculator/html/NeonLoveGL.html)
+
+#### NeonLove SVG+CSS版
+
+[NeonLoveSVG.html](https://www.lollipopnougat.top/website-calculator/html/NeonLoveSVG.html)
+
 ### 3D 模型示例
 
 [3Dforest.html](https://www.lollipopnougat.top/website-calculator/html/3Dforest.html)
