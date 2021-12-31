@@ -29,3 +29,12 @@ var design = anime({
   direction: 'alternate',
   loop: true
 });
+
+window.onload = () => {
+  let nameurl = location.href.split('?n=')[1];
+  if(nameurl) {
+    let span = document.getElementById('name');
+    let namestr = decodeURI(nameurl.replace(/&/g, '%'));
+    span.innerText = namestr;
+  }
+}
