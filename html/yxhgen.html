@@ -29,16 +29,19 @@
             margin-left: 5px;
             color: #61afef;
             width: 300px;
+            /* transform: scaleX(0); */
             transition: all 0.2s ease-out 0s;
         }
 
         .input-box:hover {
             border-bottom: solid 2px #61afef;
+            /* transform: scaleX(1); */
         }
 
         .input-box:focus {
             border-bottom: solid 2px #a7d7ff;
             color: #a7d7ff;
+            /* transform: scaleX(1); */
         }
 
         input.input-box::-webkit-input-placeholder {
@@ -126,7 +129,8 @@
     <h1 class="headline">营销号生成器</h1>
     <div class="input-area">
         <span>主体</span>
-        <input type="text" name="main" class="input-box" value="" placeholder="请输入主题" id="main-input" /><br>
+        <input type="text" name="main" class="input-box" value="" placeholder="请输入主题" id="main-input" />
+        <br>
     </div>
     <div class="input-area">
         <span>行为</span>

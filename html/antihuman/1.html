@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>反人类交互设计</title>
+</head>
+
+<body>
+    <style>
+        :root {
+            --black-8: rgba(0, 0, 0, 0.8);
+            --light: #eee;
+            --gray: #888;
+            --accent: #127a3b;
+        }
+        * {
+            user-select: none;
+        }
+
+        h2 {
+            color: var(--accent);
+        }
+
+        .voice-head {
+            color: var(--light);
+            padding-left: 10px;
+            padding-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-r {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volume {
+            display: flex;
+            flex-direction: column;
+            width: 380px;
+            height: 100px;
+            background: var(--black-8);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .logo::after {
+            content: '\e995';
+            font-family: 'Segoe MDL2 Assets';
+            font-style: normal;
+            font-size: 28px;
+            text-align: center;
+            line-height: 30px;
+            color: var(--light);
+        }
+
+        .thumb {
+            display: block;
+            position: relative;
+            top: -2px;
+            left: 5px;
+            width: 8px;
+            height: 20px;
+            border-radius: 10px;
+            transform: translate(0px, 0px);
+            background: var(--accent);
+        }
+
+        .thumb:hover {
+            background: var(--light);
+        }
+
+        .line {
+            display: block;
+            position: relative;
+            top: 10px;
+            margin-left: 10px;
+            width: 280px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--gray) 0%);
+        }
+
+        .vol-val {
+            display: inline-block;
+            width: 32px;
+            margin-left: 10px;
+            text-align: center;
+            font-size: 20px;
+            color: var(--light);
+        }
+    </style>
+    <script>
+        'use strict';
+        const max = 280;
+
+        function set_thumb_dpos(t, v, l, p, pl) {
+            let tx = p.dx - p.x;
+            let ty = p.dy - p.y;
+            // if (tx + p.otx > max) {
+            //     tx = 280 - p.otx;
+            // } else if (tx + p.otx < 0) {
+            //     tx = -p.otx;
+            // }
+            let val = Math.floor(Math.abs(tx + p.otx) / 2.8)
+            v.innerText = `${val}`;
+            if (ty + p.oty > 5 || ty + p.oty < -5 || tx + p.otx > max || tx + p.otx < 0) {
+                v.innerText = 'Err';
+                l.style.background = 'var(--gray)';
+            }
+            else {
+                l.style.background = `linear-gradient(90deg, var(--accent) ${val}%, var(--gray) ${val}%)`;
+                player.volume = val / 100;
+            }
+            t.style.transform = `translate(${tx + p.otx}px,${ty + p.oty}px)`;
+        }
+        window.onload = () => {
+            const thumb = document.getElementById('thumb');
+            const line = document.getElementById('line');
+            const player = document.getElementById('player');
+            const h2tips = document.getElementById('h2t');
+            let isPlaying = false;
+            console.log(thumb);
+            const vol_val = document.getElementById('vol_val');
+            let point = {
+                x: 0,
+                y: 0,
+                dx: 0,
+                dy: 0,
+                otx: 0,
+                oty: 0,
+                isUse: false
+            }
+            thumb.onmousedown = (e) => {
+                let ov = document.defaultView.getComputedStyle(thumb, null).transform;
+                let o = ov.substring(6).split(',');
+                point.otx = parseFloat(o[4]);
+                point.oty = parseFloat(o[5]);
+                point.x = e.clientX;
+                point.y = e.clientY;
+                point.isUse = true;
+            };
+            thumb.ontouchstart = (e) => {
+                let ov = document.defaultView.getComputedStyle(thumb, null).transform;
+                let o = ov.substring(6).split(',');
+                point.otx = parseFloat(o[4]);
+                point.oty = parseFloat(o[5]);
+                point.x = e.touches[0].pageX;
+                point.y = e.touches[0].pageY;
+                point.isUse = true;
+            }
+            window.onmousemove = (e) => {
+                if (point.isUse) {
+                    point.dx = e.clientX;
+                    point.dy = e.clientY;
+                    set_thumb_dpos(thumb, vol_val, line, point, player);
+                }
+            };
+            window.ontouchmove = (e) => {
+                if (point.isUse) {
+                    point.dx = e.touches[0].pageX;
+                    point.dy = e.touches[0].pageY;
+                    set_thumb_dpos(thumb, vol_val, line, point);
+                }
+            };
+            window.onmouseup = (e) => {
+                if(!isPlaying) {
+                    isPlaying = true;
+                    player.play();
+                    player.volume = 0;
+                    h2t.innerText = '正在播放Vicho - 文乃の幸福理論...';
+                }
+                point.isUse = false;
+            };
+            window.ontouchend = (e) => {
+                if(!isPlaying) {
+                    isPlaying = true;
+                    player.play();
+                    player.volume = 0;
+                    h2t.innerText = '正在播放Vicho - 文乃の幸福理論...';
+                }
+                point.isUse = false;
+            };
+        };
+    </script>
+    <div class="flex">
+        <audio src="./files/1.mp3" loop id="player"></audio>
+        <h1>反人类UI交互设计</h1>
+        <h2 id="h2t">点击鼠标/触摸屏幕开始播放声音</h2>
+        <div class="volume">
+            <span class="voice-head">声音</span>
+            <div class="flex-r">
+                <i class="logo"></i>
+                <div class="flex-r">
+                    <div class="slider">
+                        <div class="line" id="line"></div>
+                        <div class="thumb" id="thumb"></div>
+                    </div>
+                    <span class="vol-val" id="vol_val">0</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

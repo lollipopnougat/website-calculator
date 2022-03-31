@@ -13,6 +13,19 @@
             overflow-x: hidden;
         }
 
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #212121;
+            }
+            footer {
+                color: #eee;
+            }
+            textarea {
+                background: #212121;
+                color: #eee;
+            }
+        }
+
         header>h2 {
             text-align: center;
             font-size: 45px;
@@ -150,8 +163,10 @@
             background-color: #886600;
             box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 0px 1px;
         }
-        a {
+        a, a.link {
             transition: all 0.5s ease-out 0s;
+            color: #5678ff;
+            text-decoration: none;
         }
 
         a:visited {
@@ -160,6 +175,7 @@
 
         a:hover {
             color: #00E676;
+            text-decoration: underline;
         }
 
         a:active {
