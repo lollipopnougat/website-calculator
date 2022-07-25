@@ -91,23 +91,24 @@
         let con = new showdown.Converter({
             'backslashEscapesHTMLTags': true // 开启转义html tag选项
         });
-        document.querySelector('#btn').onclick = () => {
+        texta.oninput = () => {
             let txt = texta.value;
-            console.log(txt);
+            //console.log(txt);
             txt = txt.replace(/(\w)_([\w|{])/g, '$1\\_$2');
             txt = txt.replace(/(<\/?script>)/g, '\\$1'); // 需要backslashEscapesHTMLTags
-            console.log(txt);
+            //console.log(txt);
             box.innerHTML = con.makeHtml(txt);
             hljs.highlightAll();
-            // MathJax = {
-            //     tex: {
-            //         inlineMath: [
-            //             ['$$', '$$'],
-            //             ['\\(', '\\)']
-
-            //         ]
-            //     }
-            // };
+            MathJax.typeset();
+        }
+        document.querySelector('#btn').onclick = () => {
+            let txt = texta.value;
+            //console.log(txt);
+            txt = txt.replace(/(\w)_([\w|{])/g, '$1\\_$2');
+            txt = txt.replace(/(<\/?script>)/g, '\\$1'); // 需要backslashEscapesHTMLTags
+            //console.log(txt);
+            box.innerHTML = con.makeHtml(txt);
+            hljs.highlightAll();
             MathJax.typeset();
         }
     </script>
