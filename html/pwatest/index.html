@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>2048</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/app.js"></script>
+    <link rel="shortcut icon" href="/logo/logo_144.png" type="image/x-icon" sizes="144x144">
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?561de8ed0edac03056b0d26e37c0b8b2";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        #game-title .title {
+            text-align: center;
+            font-weight: bolder;
+            font-size: 40px;
+            margin: 6px;
+            color: #9f8b77;
+        }
+
+        #game-window {
+            width: 85vmin;
+            height: 85vmin;
+            margin: auto;
+            font-weight: 700;
+            position: relative;
+        }
+
+        div.option {
+            font-size: 2vmin;
+        }
+
+        #game-window .option .button {
+            position: relative;
+            font-size: 2vmin;
+            background-color: #9f8b77;
+            border: 1px solid #9f8b77;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #game-window .option .button:active {
+            color: #eab3bc;
+            top: 2px;
+            left: 2px;
+        }
+
+        #game-window .game-panel {
+            width: 100%;
+            height: 85vmin;
+            background-color: #bbada0;
+            border-radius: 6px;
+            margin-top: 6px;
+            position: relative;
+        }
+
+        #game-window .game-panel .bg-cell,
+        #game-window .game-panel .cell {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            background-color: #ccc0b3;
+            border-radius: 6px;
+            transition: 200ms;
+
+        }
+
+        #game-window .game-panel .cell {
+            background-color: #ffcb38;
+            opacity: .8;
+            font-size: 7vmin;
+            font-weight: bold;
+            line-height: 2.5;
+            text-align: center;
+            color: #776e65;
+        }
+
+        .row0 {
+            top: 4%;
+        }
+
+        .row1 {
+            top: 28%;
+        }
+
+        .row2 {
+            top: 52%;
+        }
+
+        .row3 {
+            top: 76%;
+        }
+
+        .col0 {
+            left: 4%;
+        }
+
+        .col1 {
+            left: 28%;
+        }
+
+        .col2 {
+            left: 52%;
+        }
+
+        .col3 {
+            left: 76%;
+        }
+    </style>
+
+    <script src="/jquery-1.9.0.min.js"></script>
+    <script>
+        var cells;
+        //铺背景方块
+        function init() {
+            cells = [
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
+            $("#game-window .option .score").text(0); //分数置0
+
+            var panel = $("#game-window .game-panel");
+            var bgs = "";
+            for (var i = 0; i < 4; i++) {
+                for (var j = 0; j < 4; j++) {
+                    bgs += "<div class = 'bg-cell row" + i + " col" + j + "'></div>";
+                }
+            }
+            panel.html(bgs);
+            random_cell();
+        }
+        //获取1-4之间的一个随机数
+        function select_from(seed) {
+            return Math.floor(Math.random() * seed);
+        }
+        //生成一个随机数字方块
+        nums = [2, 4];
+
+        function random_cell() {
+            //格子全满之后弹出函数
+            var count = 0;
+            for (var i = 0; i < cells.length; i++) {
+                for (var j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j]) {
+                        count++;
+                    }
+                }
+            }
+            if (count == 16) {
+                return;
+            }
+            //判断格子是不是空的，是的话随机填2或4
+            while (1) {
+                var i = select_from(4);
+                //console.log(i);
+                var j = select_from(4);
+                //console.log(j);
+                var cell = cells[i][j];
+                if (cell) {
+                    continue;
+                }
+                var num = nums[select_from(2)];
+                cells[i][j] = num;
+                cell = "<div class='cell row" + i + " col" + j + "'>" + num + "</div>"
+                cell = $(cell); //获得jquery 对象
+                setStyle(cell); //色块颜色
+                $("#game-window .game-panel").append(cell);
+                break;
+            }
+        }
+
+        var colors = [
+            "#eee4da", //2
+            "#ede0c8", //4
+            "#f2b179", //8
+            "#f59563", //16
+            "#f67c5f", //32
+            "#f65e3b", //64
+            "#edcf72", //128
+            "#e0d650", //256
+            "#9c0", //512
+            "#33b5e5", //1024
+            "#09c", //2048
+            "#a6c", //4096
+            "#93c" //8192
+        ];
+
+        function setStyle(cell) {
+            var num = cell.text();
+            var backgroundcolor = colors[(Math.log(num) / Math.log(2)) - 1];
+            cell.css({
+                "background-color": backgroundcolor,
+                "font-size": num >= 1024 ? "35px" : "",
+                "color": num <= 4 ? "" : "white"
+            });
+
+        }
+
+        function setScore(score) {
+            $("#game-window .option .score").text(
+                $("#game-window .option .score").text() * 1 + score);
+        }
+
+        function findCell(i, j) {
+            return $("#game-window .game-panel .cell.row" + i + ".col" + j);
+        }
+
+        function isDead() {
+            for (var i = 0; i < cells.length; i++) {
+                for (var j = 0; j < cells[i].length; j++) {
+                    var cell = cells[i][j];
+                    if (!cell) {
+                        return false;
+                    }
+                    if (i - 1 >= 0 && cell == cells[i - 1][j]) {
+                        return false;
+                    }
+                    if (i + 1 < cells.length && cell == cells[i + 1][j]) {
+                        return false;
+                    }
+                    if (j - 1 >= 0 && cell == cells[i][j - 1]) {
+                        return false;
+                    }
+                    if (j + 1 < cells[i].length && cell == cells[i][j + 1]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function leftAction() {
+            var count = 0;
+            for (var i = 0; i < cells.length; i++) {
+                for (var j = 0; j < cells.length; j++) {
+                    if (!cells[i][j]) {
+                        continue;
+                    }
+                    if (moveLeft(cells[i], i, j)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        function topAction() {
+            var count = 0;
+            for (var j = 0; j < cells[0].length; j++) {
+                for (var i = 1; i < cells.length; i++) {
+                    if (!cells[i][j]) {
+                        continue;
+                    }
+                    if (moveTop(i, j)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        function rightAction() {
+            var count = 0;
+            for (var i = 0; i < cells.length; i++) {
+                for (var j = cells[i].length - 2; j >= 0; j--) {
+                    if (!cells[i][j]) {
+                        continue;
+                    }
+                    if (moveRight(cells[i], i, j)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        function bottomAction() {
+            var count = 0;
+            for (var j = 0; j < cells[0].length; j++) {
+                for (var i = 2; i >= 0; i--) {
+                    if (!cells[i][j]) {
+                        continue;
+                    }
+                    if (moveBottom(i, j)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        function moveTop(i, j) { //进入函数说明 列固定，动行数
+            var pre = cells[i][j]; //取当前值
+            var isMoved = false;
+            for (var k = i - 1; k >= 0; k--) { //向上检查
+                var curr = cells[k][j]; //现在检查位置的元素
+                if (curr) { //如果是有数字
+                    if (curr == pre) { //如果数字相等
+                        cells[i][j] = 0; //原来位置置零
+                        cells[k][j] = curr + pre; //检查位置数字相加
+                        isMoved = true;
+                        //TODO 设置分数
+                        setScore(curr);
+                        findCell(k, j).remove();
+                        var cell = findCell(i, j)
+                            .removeClass("row" + i)
+                            .addClass("row" + k)
+                            .text(curr + pre);
+                        setStyle(cell);
+                    } else { //如果数字不相等
+                        if (!cells[k + 1][j]) { //如果检查位置为0
+                            isMoved = true;
+                            cells[i][j] = 0; //原来的位置设置成0
+                            cells[k + 1][j] = pre; //检查位置设置成pre
+
+                            cell = findCell(i, j)
+                                .removeClass("row" + i)
+                                .addClass("row" + (k + 1));
+                        }
+                    }
+                    return isMoved;
+                }
+            }
+            if (cells[0][j] == 0) {
+                isMoved = true;
+            }
+            //前面都是0
+            cells[i][j] = 0;
+            cells[0][j] = pre;
+            var cell = findCell(i, j).removeClass("row" + i)
+                .addClass("row0");
+            return isMoved;
+        }
+
+        function moveLeft(row, i, j) {
+            var pre = row[j];
+            var isMoved = false;
+            for (var k = j - 1; k >= 0; k--) {
+                var curr = row[k]; //现在检查位置的元素
+                if (curr) {
+                    if (curr == pre) {
+                        row[j] = 0; //原来位置置零
+                        row[k] = curr + pre;
+                        isMoved = true;
+                        //TODO 设置分数
+                        setScore(curr);
+
+                        findCell(i, k).remove();
+                        var cell = findCell(i, j)
+                            .removeClass("col" + j)
+                            .addClass("col" + k)
+                            .text(curr + pre);
+                        setStyle(cell);
+                    } else {
+                        if (!row[k + 1]) {
+                            isMoved = true;
+                            row[j] = 0;
+                            row[k + 1] = pre;
+                            cell = findCell(i, j)
+                                .removeClass("col" + j)
+                                .addClass("col" + (k + 1));
+                        }
+                    }
+                    return isMoved;
+                }
+            }
+            if (row[0] == 0) {
+                isMoved = true;
+            }
+            //前面都是0
+            row[j] = 0;
+            row[0] = pre;
+            var cell = findCell(i, j).removeClass("col" + j)
+                .addClass("col0");
+
+            return isMoved;
+        }
+
+        function moveRight(row, i, j) {
+            var pre = row[j];
+            var isMoved = false;
+            for (var k = j + 1; k < row.length; k++) {
+                var curr = row[k]; //现在检查位置的元素
+                if (curr) {
+                    if (curr == pre) {
+                        row[j] = 0; //原来位置置零
+                        row[k] = curr + pre;
+                        isMoved = true;
+                        //TODO 设置分数
+                        setScore(curr);
+                        findCell(i, k).remove();
+                        var cell = findCell(i, j)
+                            .removeClass("col" + j)
+                            .addClass("col" + k)
+                            .text(curr + pre);
+                        setStyle(cell);
+                    } else {
+                        if (!row[k - 1]) {
+                            isMoved = true;
+                            row[j] = 0;
+                            row[k - 1] = pre;
+                            cell = findCell(i, j)
+                                .removeClass("col" + j)
+                                .addClass("col" + (k - 1));
+                        }
+                    }
+                    return isMoved;
+                }
+            }
+            if (row[3] == 0) {
+                isMoved = true;
+            }
+            //前面都是0
+            row[j] = 0;
+            row[row.length - 1] = pre;
+            var cell = findCell(i, j).removeClass("col" + j)
+                .addClass("col3");
+
+            return isMoved;
+        }
+
+        function moveBottom(i, j) {
+            var pre = cells[i][j]; //取当前值
+            var isMoved = false;
+            for (var k = i + 1; k <= 3; k++) { //向下检查
+                var curr = cells[k][j]; //现在检查位置的元素
+                if (curr) { //如果是有数字
+                    if (curr == pre) { //如果数字相等
+                        cells[i][j] = 0; //原来位置置零
+                        cells[k][j] = curr + pre; //检查位置数字相加
+                        isMoved = true;
+                        //TODO 设置分数
+                        setScore(curr);
+                        findCell(k, j).remove();
+                        var cell = findCell(i, j)
+                            .removeClass("row" + i)
+                            .addClass("row" + k)
+                            .text(curr + pre);
+                        setStyle(cell);
+                    } else { //如果数字不相等
+                        if (!cells[k - 1][j]) {
+                            isMoved = true;
+                            cells[i][j] = 0; //原来的位置设置成0
+                            cells[k - 1][j] = pre; //检查位置设置成pre
+
+                            cell = findCell(i, j)
+                                .removeClass("row" + i)
+                                .addClass("row" + (k - 1));
+                        }
+                    }
+                    return isMoved;
+                }
+            }
+            if (cells[3][j] == 0) {
+                isMoved = true;
+            }
+            //前面都是0
+            cells[i][j] = 0;
+            cells[3][j] = pre;
+            var cell = findCell(i, j).removeClass("row" + i)
+                .addClass("row3");
+            return isMoved;
+        }
+        $(function () {
+            //初始化界面
+            init();
+            //new game按钮效果实现
+            $("#game-window .option .button").click(function () {
+                init();
+            })
+            //阻止页面滑动
+            $(document).on('touchmove', function (e) {
+                e.preventDefault();
+            })
+
+            var startx, starty;
+            //获得角度
+            function getAngle(angx, angy) {
+                return Math.atan2(angy, angx) * 180 / Math.PI;
+            };
+
+            //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+            function getDirection(startx, starty, endx, endy) {
+                var angx = endx - startx;
+                var angy = endy - starty;
+                var result = 0;
+
+                //如果滑动距离太短
+                if (Math.abs(angx) < 2 && Math.abs(angy) < 2) {
+                    return result;
+                }
+
+                var angle = getAngle(angx, angy);
+                if (angle >= -135 && angle <= -45) {
+                    result = 1;
+                } else if (angle > 45 && angle < 135) {
+                    result = 2;
+                } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+                    result = 3;
+                } else if (angle >= -45 && angle <= 45) {
+                    result = 4;
+                }
+
+                return result;
+            }
+            //手指接触屏幕
+            document.addEventListener("touchstart", function (e) {
+                startx = e.touches[0].pageX;
+                starty = e.touches[0].pageY;
+            }, false);
+            //手指离开屏幕
+            document.addEventListener("touchend", function (e) {
+                var endx, endy;
+                endx = e.changedTouches[0].pageX;
+                endy = e.changedTouches[0].pageY;
+                var direction = getDirection(startx, starty, endx, endy);
+                switch (direction) {
+                    case 0:
+                        break;
+                    case 1:
+                        SlideUp();
+                        break;
+                    case 2:
+                        SlideDown();
+                        break;
+                    case 3:
+                        SlideLeft();
+                        break;
+                    case 4:
+                        SlideRight();
+                        break;
+                    default:
+                }
+            }, false);
+
+            function SlideLeft() {
+                if (leftAction()) {
+                    random_cell();
+                    if (isDead() == true) {
+                        alert("游戏结束");
+                        return;
+                    }
+                }
+            }
+
+            function SlideUp() {
+                if (topAction()) {
+                    random_cell();
+                    if (isDead() == true) {
+                        alert("游戏结束");
+                        return;
+                    }
+                }
+            }
+
+            function SlideDown() {
+                if (bottomAction()) {
+                    random_cell();
+                    if (isDead() == true) {
+                        alert("游戏结束");
+                        return;
+                    }
+                }
+            }
+
+            function SlideRight() {
+                if (rightAction()) {
+                    random_cell();
+                    if (isDead() == true) {
+                        alert("游戏结束");
+                        return;
+                    }
+                }
+            }
+
+            //监听按键事件
+            $(window).on("keydown", function (e) {
+                var keyCode = e.keyCode;
+                var keyChar = String.fromCharCode(keyCode)
+                    .toLocaleUpperCase(); //转换大写
+                if (keyChar == "A" || keyCode == 37) {
+                    SlideLeft();
+                } else if (keyChar == "W" || keyCode == 38) {
+                    SlideUp();
+                } else if (keyChar == "D" || keyCode == 39) {
+                    SlideRight();
+                } else if (keyChar == "S" || keyCode == 40) {
+                    SlideDown();
+                }
+            });
+
+        })
+    </script>
+</head>
+
+<body>
+    <header id="game-title">
+        <h1 class="title">2048</h1>
+    </header>
+
+    <section id="game-window">
+        <div class="option">
+            <button class="button">重新开始游戏</button>
+            得分:
+            <span class="score">0</span>
+        </div>
+        <div class="game-panel">
+            <div class="bg-cell row2 col3"></div>
+            <div class="cell row2 col3">2</div>
+        </div>
+
+    </section>
+</body>
+
+</html>

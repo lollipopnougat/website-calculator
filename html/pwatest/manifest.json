@@ -1,0 +1,30 @@
+{
+    "name": "2048",
+    "short_name": "2048",
+    "display": "standalone",
+    "start_url": "/",
+    "theme_color": "#ffffff",
+    "background_color": "#0099ff",
+    "icons": [
+        {
+            "src": "logo/logo_192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "logo/logo_144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "logo/logo_96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "logo/logo_72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        }
+    ]
+}
