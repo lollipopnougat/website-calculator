@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 //作者：hhh5460
 //时间：2017年6月26日
 // 棋盘
@@ -149,11 +148,11 @@ class AIPlayer extends Player {
         let player = new AIPlayer(take);  // 假想敌！！！
         let res = this.minimax(board, player);
         //print('OK')
-        return res[1];
+        return res![1];
     };
     // 极大极小法搜索，α-β剪枝
     public minimax = (board: Board, player: AIPlayer, depth = 0): number[] => {
-        let bestVal, bestAction;
+        let bestVal!: number, bestAction!: number;
         //参考：https://stackoverflow.com/questions/44089757/minimax-algorithm-for-tic-tac-toe-python
         if (this.take == "O") {
             bestVal = -10;
@@ -163,13 +162,13 @@ class AIPlayer extends Player {
         }
         if (board.teminate()) {
             if (board.get_winner() == 0) {
-                return [-10 + depth, null];
+                return [-10 + depth, 0];
             }
             else if (board.get_winner() == 1) {
-                return [10 - depth, null];
+                return [10 - depth, 0];
             }
             else if (board.get_winner() == 2) {
-                return [0, null];
+                return [0, 0];
             }
         }
         for (let action of board.get_legal_actions()) {  // 遍历合法走法
@@ -201,7 +200,7 @@ class Game {
         this.current_player = null;
     };
     private board: Board;
-    private current_player: Player;
+    private current_player: Player | null;
 
     // 生成玩家
     private mk_player = (p: number, take = 'X'): Player => {  // p in [0,1]

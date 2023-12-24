@@ -81,6 +81,14 @@
 
 [3Dforest.html](https://www.lollipopnougat.top/website-calculator/html/3Dforest.html)
 
+### 黑洞
+
+[BlackHole.html](https://www.lollipopnougat.top/website-calculator/html/blackhole/index.html)
+
+### 冰山动画
+
+[BlackHole.html](https://www.lollipopnougat.top/website-calculator/html/climacode/index.html)
+
 ### ~~买了个大表~~数字时钟
 
 [clock.html](https://www.lollipopnougat.top/website-calculator/html/clock.html)
@@ -129,4 +137,6 @@
 
 ### 浏览器检测（js正则实现，读取UA，有bug的话请反馈）
 
-[TBroswer.html](https://www.lollipopnougat.top/website-calculator/html/TBroswer.html)
+[TBrowser.html](https://www.lollipopnougat.top/website-calculator/html/TBrowser.html)
+
+[TBrowser2.html](https://www.lollipopnougat.top/website-calculator/html/tbrowser2.html)
