@@ -1,0 +1,60 @@
+#root {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.m-box {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow-y: hidden;
+  transition: height 0.2s ease;
+}
+.ctx-box {
+  display: flex;
+}
+
+h3 {
+  width: 4vw;
+  margin: 1.33334vw auto;
+  height: 4vw;
+  background: #2e8555;
+  font-size: 2.66667vw;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.h-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.slick-list {
+  transition: height 0.5s ease;
+}
+
+.track-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.track {
+  width: 20px;
+  height: 8px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  overflow-x: hidden;
+}
+
+.thumb {
+  width: 5px;
+  height: 8px;
+  background: #2e8555;
+  transition: transform 0.2s ease;
+}
