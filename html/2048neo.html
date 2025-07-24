@@ -488,11 +488,13 @@
             //new game按钮效果实现
             $("#game-window .option .button").click(function () {
                 init();
-            })
+            });
             //阻止页面滑动
             $(document).on('touchmove', function (e) {
                 e.preventDefault();
-            })
+            }, {
+                passive: false
+            });
 
             var startx, starty;
             //获得角度
@@ -526,11 +528,13 @@
             }
             //手指接触屏幕
             document.addEventListener("touchstart", function (e) {
+                e.preventDefault();
                 startx = e.touches[0].pageX;
                 starty = e.touches[0].pageY;
             }, false);
             //手指离开屏幕
             document.addEventListener("touchend", function (e) {
+                e.preventDefault();
                 var endx, endy;
                 endx = e.changedTouches[0].pageX;
                 endy = e.changedTouches[0].pageY;
