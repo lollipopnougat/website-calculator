@@ -19,12 +19,19 @@
     <style>
         body {
             overflow: hidden;
+            background: #f2f2f2;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Hiragino Sans GB, Microsoft Yahei, 微软雅黑, Arial, Helvetica, STHeiti, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol;
         }
 
         * {
             padding: 0;
             margin: 0;
             font-family: Arial;
+        }
+
+        .place-holder {
+            height: 6vh;
+            width: 100vw;
         }
 
         #game-title .title {
@@ -44,18 +51,28 @@
         }
 
         div.option {
-            font-size: 2vmin;
+            display: flex;
+            font-size: 3vmin;
+            align-items: baseline;
+        }
+
+        #game-window .option .score {
+            font-size: 3vmin;
         }
 
         #game-window .option .button {
             position: relative;
-            font-size: 2vmin;
+            font-size: 3vmin;
             background-color: #9f8b77;
             border: 1px solid #9f8b77;
             color: white;
             padding: 5px;
             border-radius: 4px;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
         }
 
         #game-window .option .button:active {
@@ -125,11 +142,54 @@
         .col3 {
             left: 76%;
         }
+        .dlg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .panel {
+            width: 80vw;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(220, 220, 220, 0.5);
+            backdrop-filter: blur(15px);
+            border-radius: 8px;
+            flex-direction: column;
+            padding: 10px 0 15px 0;
+        }
+        .panel h3 {
+            font-size: 6vmin;
+        }
+        .panel p {
+            font-size: 4vmin;
+        }
+        .panel button {
+            position: relative;
+            font-size: 4vmin;
+            background-color: #9f8b77;
+            border: 1px solid #9f8b77;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 
     <script src="jquery-1.9.0.min.js"></script>
     <script>
         var cells;
+        var dlg;
         //铺背景方块
         function init() {
             cells = [
@@ -139,6 +199,14 @@
                 [0, 0, 0, 0]
             ];
             $("#game-window .option .score").text(0); //分数置0
+            $(".dlg .panel .score").text(0);
+            $(".dlg .panel .retry").click(function () {
+                init();
+            });
+            dlg = $(".dlg");
+            if (dlg) {
+                dlg.hide();
+            }
 
             var panel = $("#game-window .game-panel");
             var bgs = "";
@@ -220,6 +288,7 @@
         function setScore(score) {
             $("#game-window .option .score").text(
                 $("#game-window .option .score").text() * 1 + score);
+            $(".dlg .panel .score").text($("#game-window .option .score").text());
         }
 
         function findCell(i, j) {
@@ -529,13 +598,11 @@
             }
             //手指接触屏幕
             document.addEventListener("touchstart", function (e) {
-                e.preventDefault();
                 startx = e.touches[0].pageX;
                 starty = e.touches[0].pageY;
             }, false);
             //手指离开屏幕
             document.addEventListener("touchend", function (e) {
-                e.preventDefault();
                 var endx, endy;
                 endx = e.changedTouches[0].pageX;
                 endy = e.changedTouches[0].pageY;
@@ -563,7 +630,9 @@
                 if (leftAction()) {
                     random_cell();
                     if (isDead() == true) {
-                        alert("游戏结束");
+                        if (dlg) {
+                            dlg.show();
+                        }
                         return;
                     }
                 }
@@ -573,7 +642,9 @@
                 if (topAction()) {
                     random_cell();
                     if (isDead() == true) {
-                        alert("游戏结束");
+                        if (dlg) {
+                            dlg.show();
+                        }
                         return;
                     }
                 }
@@ -583,7 +654,9 @@
                 if (bottomAction()) {
                     random_cell();
                     if (isDead() == true) {
-                        alert("游戏结束");
+                        if (dlg) {
+                            dlg.show();
+                        }
                         return;
                     }
                 }
@@ -593,7 +666,9 @@
                 if (rightAction()) {
                     random_cell();
                     if (isDead() == true) {
-                        alert("游戏结束");
+                        if (dlg) {
+                            dlg.show();
+                        }
                         return;
                     }
                 }
@@ -620,6 +695,7 @@
 </head>
 
 <body>
+    <div class="place-holder"></div>
     <header id="game-title">
         <h1 class="title">2048</h1>
     </header>
@@ -636,6 +712,14 @@
         </div>
 
     </section>
+    <div class="dlg">
+        <div class="panel">
+            <h3>游戏结束</h3>
+            <p>啊哦，好像移动不了了</p>
+            <p>得分<span class="score">0</span></p>
+            <button class="retry">重来</button>
+        </div>
+    </div>
 </body>
 
 </html>
