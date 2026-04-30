@@ -4,8 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>2048</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800;900&display=swap" rel="stylesheet">
     <style>
+        /* latin */
+        @font-face {
+          font-family: 'Outfit';
+          font-style: normal;
+          font-weight: 300;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* latin */
+        @font-face {
+          font-family: 'Outfit';
+          font-style: normal;
+          font-weight: 600;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* latin */
+        @font-face {
+          font-family: 'Outfit';
+          font-style: normal;
+          font-weight: 800;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        /* latin */
+        @font-face {
+          font-family: 'Outfit';
+          font-style: normal;
+          font-weight: 900;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
         *{margin:0;padding:0;box-sizing:border-box}
         :root{
             --bg:#0d0b08;
@@ -143,6 +180,12 @@
         .modal button:hover,.modal button:active{
             background:#ffd84c;color:var(--bg);box-shadow:0 4px 24px rgba(245,200,50,.3);
         }
+        #restoreYes:hover,#restoreYes:active{
+            background:#ffd84c;color:var(--bg);box-shadow:0 4px 24px rgba(245,200,50,.3);
+        }
+        #restoreNo:hover,#restoreNo:active{
+            background:rgba(245,200,50,.08);color:var(--accent);border-color:rgba(245,200,50,.25);
+        }
 
         @media(max-width:480px){
             :root{--gap:8px;--radius:8px}
@@ -182,6 +225,7 @@
     <div class="board" id="board"></div>
     <div class="controls">
         <p class="hint">滑动或方向键移动</p>
+        <button id="saveBtn" aria-label="保存进度">保存进度</button>
         <button id="restart" aria-label="重新开始游戏">重新开始</button>
     </div>
 </div>
@@ -197,6 +241,18 @@
     </div>
 </div>
 
+<div class="overlay" id="restoreOverlay" role="dialog" aria-modal="true" aria-label="恢复游戏">
+    <div class="modal">
+        <h2>发现上次存档</h2>
+        <p class="sub">是否从上次保存的位置继续？</p>
+        <p class="final-score" id="restoreScore">0</p>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:8px">
+            <button id="restoreYes" aria-label="继续游戏" style="background:var(--accent);color:var(--bg);border:none;padding:14px 28px;font-size:1rem;font-weight:800;border-radius:10px;white-space: nowrap;">继续游戏</button>
+            <button id="restoreNo" aria-label="开始新游戏" style="background:var(--surface);color:var(--text-muted);border:1px solid rgba(245,200,50,.1);padding:14px 28px;font-size:1rem;font-weight:800;border-radius:10px;white-space: nowrap;">新游戏</button>
+        </div>
+    </div>
+</div>
+
 <script>
 (function(){
     'use strict';
@@ -208,6 +264,8 @@
     var overlay    = document.getElementById('overlay');
     var finalScore = document.getElementById('finalScore');
     var toast      = document.getElementById('toast');
+    var restoreOverlay = document.getElementById('restoreOverlay');
+    var restoreScoreEl = document.getElementById('restoreScore');
 
     var grid          = [];
     var score         = 0;
@@ -221,6 +279,36 @@
     var MOVE_DURATION = 120; // 毫秒
 
     bestEl.textContent = bestScore;
+
+    /* ===== 存档功能 ===== */
+    var SAVE_KEY = 'game2048_state';
+
+    function saveState(){
+        try {
+            var state = {
+                grid: grid,
+                score: score,
+                gameOver: gameOver,
+                reached2048: reached2048
+            };
+            localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        } catch(e){}
+    }
+
+    function loadState(){
+        try {
+            var raw = localStorage.getItem(SAVE_KEY);
+            if(!raw) return null;
+            var state = JSON.parse(raw);
+            if(!state || !state.grid || state.grid.length !== 4) return null;
+            return state;
+        } catch(e){ return null; }
+    }
+
+    function clearState(){
+        try { localStorage.removeItem(SAVE_KEY); } catch(e){}
+    }
+
 
     /* 方块颜色 */
     function tileStyle(val){
@@ -569,13 +657,60 @@
         reached2048 = false;
         animating   = false;
         hideOverlay();
+        restoreOverlay.classList.remove('active');
         addRandomTile();
         addRandomTile();
         renderFinal();
         updateScore(0);
+        clearState();
     }
 
-    createCells();
+    /* 从存档恢复 */
+    function restoreFromState(state){
+        grid = state.grid;
+        score = state.score;
+        gameOver = state.gameOver;
+        reached2048 = state.reached2048;
+        mergedCells = [];
+        newTilePos  = null;
+        animating   = false;
+        hideOverlay();
+        restoreOverlay.classList.remove('active');
+        renderFinal();
+        updateScore(0);
+        if(gameOver){
+            setTimeout(showOverlay, 320);
+        }
+    }
+
+    /* 启动时检查存档 */
+    function startup(){
+        createCells();
+        var saved = loadState();
+        if(saved){
+            /* 有存档，询问用户 */
+            restoreScoreEl.textContent = saved.score;
+            restoreOverlay.classList.add('active');
+        } else {
+            init();
+        }
+    }
+
+    /* 恢复按钮 */
+    document.getElementById('restoreYes').addEventListener('click', function(){
+        var saved = loadState();
+        if(saved){
+            restoreFromState(saved);
+        } else {
+            init();
+        }
+    });
+    document.getElementById('restoreNo').addEventListener('click', function(){
+        clearState();
+        init();
+    });
+
+    startup();
 
     /* 键盘 */
     var keyMap = {
@@ -583,20 +718,23 @@
         w:'up',W:'up',s:'down',S:'down',a:'left',A:'left',d:'right',D:'right'
     };
     document.addEventListener('keydown',function(e){
-        if(keyMap[e.key]){ e.preventDefault(); move(keyMap[e.key]); }
+        if(keyMap[e.key]){
+            e.preventDefault();
+            if(!restoreOverlay.classList.contains('active')) move(keyMap[e.key]);
+        }
     });
 
     /* 触摸 */
     var tx0, ty0, tt0;
     document.addEventListener('touchstart',function(e){
-        if(overlay.classList.contains('active')) return;
+        if(overlay.classList.contains('active') || restoreOverlay.classList.contains('active')) return;
         if(e.touches.length===1){
             tx0=e.touches[0].clientX; ty0=e.touches[0].clientY; tt0=Date.now();
         }
     },{passive:true});
 
     document.addEventListener('touchmove',function(e){
-        if(!overlay.classList.contains('active')) e.preventDefault();
+        if(!overlay.classList.contains('active') && !restoreOverlay.classList.contains('active')) e.preventDefault();
     },{passive:false});
 
     document.addEventListener('touchend',function(e){
@@ -610,6 +748,14 @@
         else move(dy>0?'down':'up');
     },{passive:true});
 
+    /* 保存按钮 */
+    document.getElementById('saveBtn').addEventListener('click', function(){
+        if(gameOver) return;
+        saveState();
+        toast.textContent = '进度已保存!';
+        showToast();
+    });
+
     /* 按钮 */
     document.getElementById('restart').addEventListener('click', init);
     document.getElementById('retry').addEventListener('click', init);
@@ -621,7 +767,6 @@
         resizeTimer = setTimeout(function(){ if(!animating) renderFinal(); }, 80);
     });
 
-    init();
 })();
 </script>
 </body>
